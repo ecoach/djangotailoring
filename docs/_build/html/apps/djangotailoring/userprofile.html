@@ -1,0 +1,266 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>djangotailoring.userprofile &mdash; djangotailoring v0.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="djangotailoring v0.5 documentation" href="../../index.html" />
+    <link rel="up" title="djangotailoring" href="index.html" />
+    <link rel="next" title="djangotailoring.tailoringrequest" href="tailoringrequest.html" />
+    <link rel="prev" title="djangotailoring.views.localized" href="views/localized.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tailoringrequest.html" title="djangotailoring.tailoringrequest"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="views/localized.html" title="djangotailoring.views.localized"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-djangotailoring.userprofile">
+<span id="djangotailoring-userprofile"></span><h1><tt class="docutils literal"><span class="pre">djangotailoring.userprofile</span></tt><a class="headerlink" href="#module-djangotailoring.userprofile" title="Permalink to this headline">¶</a></h1>
+<p>A major convenience for tailoring users with <tt class="docutils literal"><span class="pre">djangotailoring</span></tt> is
+associating a Profile object with <tt class="xref py py-mod docutils literal"><span class="pre">django.contrib.auth</span></tt> User objects. In
+doing so, a number of view classes can expect tailoring subject data to be
+available easily on every request. To facilitate this optional, yet powerful
+feature, <tt class="docutils literal"><span class="pre">djangotailoring</span></tt> provides an abstract Profile class that provides
+the functionality to make this process simple.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">As of the current version of <tt class="docutils literal"><span class="pre">djangotailoring</span></tt>, if you use the
+BaseUserProfile class, you <strong>must</strong> also add the
+<a class="reference internal" href="../djangotailoring.tracking/index.html#module-djangotailoring.tracking" title="djangotailoring.tracking"><tt class="xref py py-mod docutils literal"><span class="pre">djangotailoring.tracking</span></tt></a> application to your INSTALLED_APPS list.
+This is because, by default, BaseUserProfile inherits from
+<a class="reference internal" href="../djangotailoring.tracking/support.html#djangotailoring.tracking.support.LatestEventMixin" title="djangotailoring.tracking.support.LatestEventMixin"><tt class="xref py py-class docutils literal"><span class="pre">djangotailoring.tracking.support.LatestEventMixin</span></tt></a>.</p>
+</div>
+<div class="section" id="models">
+<h2>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="djangotailoring.userprofile.BaseUserProfile">
+<em class="property">class </em><tt class="descclassname">djangotailoring.userprofile.</tt><tt class="descname">BaseUserProfile</tt><a class="headerlink" href="#djangotailoring.userprofile.BaseUserProfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>An abstract model class which provides the <a class="reference internal" href="#djangotailoring.userprofile.BaseUserProfile.tailoringsubject" title="djangotailoring.userprofile.BaseUserProfile.tailoringsubject"><tt class="xref py py-attr docutils literal"><span class="pre">tailoringsubject</span></tt></a>
+attribute, among other features, to make using the View classes simple.
+In addition to the functions available here, it is mixed with
+<a class="reference internal" href="../djangotailoring.tracking/support.html#djangotailoring.tracking.support.LatestEventMixin" title="djangotailoring.tracking.support.LatestEventMixin"><tt class="xref py py-class docutils literal"><span class="pre">djangotailoring.tracking.support.LatestEventMixin</span></tt></a> for additional
+convenience, including <tt class="xref py py-meth docutils literal"><span class="pre">LatestEventMixin.latest_event()</span></tt> and
+<tt class="xref py py-meth docutils literal"><span class="pre">LatestEventMixin.latest_event_date()</span></tt></p>
+<dl class="attribute">
+<dt id="djangotailoring.userprofile.BaseUserProfile.subjectloaderclass">
+<tt class="descname">subjectloaderclass</tt><a class="headerlink" href="#djangotailoring.userprofile.BaseUserProfile.subjectloaderclass" title="Permalink to this definition">¶</a></dt>
+<dd><p>A reference to an object that follows the
+<a class="reference internal" href="subjects.html#subject-loader-infrastructure"><em>SubjectLoader</em></a> protocol. This
+SubjectLoader will be used to with <a class="reference internal" href="#djangotailoring.userprofile.BaseUserProfile.tailoringid" title="djangotailoring.userprofile.BaseUserProfile.tailoringid"><tt class="xref py py-attr docutils literal"><span class="pre">tailoringid</span></tt></a> to handle
+<a class="reference internal" href="#djangotailoring.userprofile.BaseUserProfile.tailoringsubject" title="djangotailoring.userprofile.BaseUserProfile.tailoringsubject"><tt class="xref py py-attr docutils literal"><span class="pre">tailoringsubject</span></tt></a> creation, storage and deletion.</p>
+<p>By default, it is assigned the return value of
+<a class="reference internal" href="project.html#djangotailoring.project.getsubjectloader" title="djangotailoring.project.getsubjectloader"><tt class="xref py py-func docutils literal"><span class="pre">djangotailoring.project.getsubjectloader()</span></tt></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="djangotailoring.userprofile.BaseUserProfile.user">
+<tt class="descname">user</tt><a class="headerlink" href="#djangotailoring.userprofile.BaseUserProfile.user" title="Permalink to this definition">¶</a></dt>
+<dd><p>A ForeignKey reference to the associated django.contrib.auth User object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="djangotailoring.userprofile.BaseUserProfile.accepted_consent">
+<tt class="descname">accepted_consent</tt><a class="headerlink" href="#djangotailoring.userprofile.BaseUserProfile.accepted_consent" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Nulltable boolean field indicating whether a user has accepted or
+declined a study’s consent process. <tt class="xref docutils literal"><span class="pre">None</span></tt> indicates that the user has
+done neither.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="djangotailoring.userprofile.BaseUserProfile.withdrawn_reason">
+<tt class="descname">withdrawn_reason</tt><a class="headerlink" href="#djangotailoring.userprofile.BaseUserProfile.withdrawn_reason" title="Permalink to this definition">¶</a></dt>
+<dd><p>A 64-character-long string field that can be used to store a short
+description of why a user has been withdrawn from a study. If a user has
+any <tt class="docutils literal"><span class="pre">withdrawn_reason</span></tt> set, it is assumed to be no longer active.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="djangotailoring.userprofile.BaseUserProfile.updated">
+<tt class="descname">updated</tt><a class="headerlink" href="#djangotailoring.userprofile.BaseUserProfile.updated" title="Permalink to this definition">¶</a></dt>
+<dd><p>The timestamp for when this Profile object was last saved to the database.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="djangotailoring.userprofile.BaseUserProfile.created">
+<tt class="descname">created</tt><a class="headerlink" href="#djangotailoring.userprofile.BaseUserProfile.created" title="Permalink to this definition">¶</a></dt>
+<dd><p>The timestamp for when this Profile object was created in the database.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="djangotailoring.userprofile.BaseUserProfile.tailoringid">
+<tt class="descname">tailoringid</tt><a class="headerlink" href="#djangotailoring.userprofile.BaseUserProfile.tailoringid" title="Permalink to this definition">¶</a></dt>
+<dd><p>The string which is used when asking <a class="reference internal" href="#djangotailoring.userprofile.BaseUserProfile.subjectloaderclass" title="djangotailoring.userprofile.BaseUserProfile.subjectloaderclass"><tt class="xref py py-attr docutils literal"><span class="pre">subjectloaderclass</span></tt></a> to load,
+store, or delete the <a class="reference internal" href="#djangotailoring.userprofile.BaseUserProfile.tailoringsubject" title="djangotailoring.userprofile.BaseUserProfile.tailoringsubject"><tt class="xref py py-attr docutils literal"><span class="pre">tailoringsubject</span></tt></a>. By default, this is a
+read-only property equal to <tt class="docutils literal"><span class="pre">self.user.id</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="djangotailoring.userprofile.BaseUserProfile.tailoringsubject">
+<tt class="descname">tailoringsubject</tt><a class="headerlink" href="#djangotailoring.userprofile.BaseUserProfile.tailoringsubject" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tailoring2 subject instance for the associated django.contrib.auth User
+object.</p>
+<p>By default, it is a read/write/delete-able property backed by
+<a class="reference internal" href="#djangotailoring.userprofile.BaseUserProfile.subjectloaderclass" title="djangotailoring.userprofile.BaseUserProfile.subjectloaderclass"><tt class="xref py py-attr docutils literal"><span class="pre">subjectloaderclass</span></tt></a> using <a class="reference internal" href="#djangotailoring.userprofile.BaseUserProfile.tailoringid" title="djangotailoring.userprofile.BaseUserProfile.tailoringid"><tt class="xref py py-attr docutils literal"><span class="pre">tailoringid</span></tt></a> as the subjectid.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.userprofile.BaseUserProfile.is_active_participant">
+<tt class="descname">is_active_participant</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.userprofile.BaseUserProfile.is_active_participant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a notional indication of whether a user is in-fact active as a
+study participant. This is true if <a class="reference internal" href="#djangotailoring.userprofile.BaseUserProfile.accepted_consent" title="djangotailoring.userprofile.BaseUserProfile.accepted_consent"><tt class="xref py py-attr docutils literal"><span class="pre">accepted_consent</span></tt></a> is True and
+<a class="reference internal" href="#djangotailoring.userprofile.BaseUserProfile.withdrawn_reason" title="djangotailoring.userprofile.BaseUserProfile.withdrawn_reason"><tt class="xref py py-attr docutils literal"><span class="pre">withdrawn_reason</span></tt></a> is set to anything other than <tt class="xref docutils literal"><span class="pre">None</span></tt> or the
+empty string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.userprofile.BaseUserProfile.characteristic_value">
+<tt class="descname">characteristic_value</tt><big>(</big><em>self</em>, <em>valuename</em><span class="optional">[</span>, <em>source=''</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#djangotailoring.userprofile.BaseUserProfile.characteristic_value" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>valuename</strong> (<em>a string</em>) &#8211; the characteristic to look up</li>
+<li><strong>source</strong> (<em>a string</em>) &#8211; the source in which to lookup <tt class="docutils literal"><span class="pre">valuename</span></tt></li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">an object appropriately typed to the characteristic type</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="djangotailoring.userprofile.register_profile_post_save_handler">
+<tt class="descclassname">djangotailoring.userprofile.</tt><tt class="descname">register_profile_post_save_handler</tt><big>(</big><em>profileclass</em><big>)</big><a class="headerlink" href="#djangotailoring.userprofile.register_profile_post_save_handler" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>profileclass</strong> (a subclass of <a class="reference internal" href="#djangotailoring.userprofile.BaseUserProfile" title="djangotailoring.userprofile.BaseUserProfile"><tt class="xref py py-class docutils literal"><span class="pre">BaseUserProfile</span></tt></a>) &#8211; class that should be registered</td>
+</tr>
+</tbody>
+</table>
+<p>Registers a database signal handler to create an instance of
+<tt class="docutils literal"><span class="pre">profileclass</span></tt> whenever a <tt class="xref py py-mod docutils literal"><span class="pre">django.contrib.auth</span></tt> User object is
+created.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">djangotailoring.userprofile</span></tt></a><ul>
+<li><a class="reference internal" href="#models">Models</a></li>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="views/localized.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">djangotailoring.views.localized</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tailoringrequest.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">djangotailoring.tailoringrequest</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/apps/djangotailoring/userprofile.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tailoringrequest.html" title="djangotailoring.tailoringrequest"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="views/localized.html" title="djangotailoring.views.localized"
+             >previous</a> |</li>
+        <li><a href="../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="index.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Dennis O’Reilly.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

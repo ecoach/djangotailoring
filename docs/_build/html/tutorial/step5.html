@@ -1,0 +1,175 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Step 5: Adding Users &mdash; djangotailoring v0.5 documentation</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="djangotailoring v0.5 documentation" href="../index.html" />
+    <link rel="up" title="A djangotailoring Walkthrough" href="index.html" />
+    <link rel="next" title="Step 6: Run It!" href="step6.html" />
+    <link rel="prev" title="Step 4: Attaching the Views to URLs" href="step4.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="step6.html" title="Step 6: Run It!"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="step4.html" title="Step 4: Attaching the Views to URLs"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">A <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Walkthrough</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="step-5-adding-users">
+<h1>Step 5: Adding Users<a class="headerlink" href="#step-5-adding-users" title="Permalink to this headline">¶</a></h1>
+<p>One thing that needs to happen before users can log into the site is to make
+user accounts. For the sake of brevity, you will make users in the shell. The
+process can be automated, but for this tutorial, you will be doing it the hard
+way.</p>
+<div class="section" id="accesscodes">
+<h2>AccessCodes<a class="headerlink" href="#accesscodes" title="Permalink to this headline">¶</a></h2>
+<p>As you saw in <a class="reference internal" href="step3.html"><em>Step 3: Building Up Views</em></a>, the site will use a djangotailoring feature of
+access codes. In particular, the easiest way of doing this is using the
+<tt class="docutils literal"><span class="pre">BasicAccessCode</span></tt> class. <tt class="docutils literal"><span class="pre">BasicAccessCode</span></tt> provides an interface for
+generating users with usernames with the format <em>CC####</em>, where &#8216;C&#8217; is a
+letter, and &#8216;#&#8217; is a base-10 digit.</p>
+<ul>
+<li><p class="first">Start up a python shell by running:</p>
+<div class="highlight-python"><pre>$ python manage.py shell</pre>
+</div>
+</li>
+</ul>
+<p>This launches a python interactive shell with the django <tt class="docutils literal"><span class="pre">settings</span></tt> module
+values preloaded and configured.</p>
+<ul>
+<li><p class="first">Import the <tt class="docutils literal"><span class="pre">BasicAccessCode</span></tt> class:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">djangotailoring.accounts.accesscodes</span> <span class="kn">import</span> <span class="n">BasicAccessCode</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Play around a bit:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">code</span> <span class="o">=</span> <span class="n">BasicAccessCode</span><span class="o">.</span><span class="n">new_code</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">code</span>
+<span class="go">&lt;BasicAccessCode: FC9384&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">codes</span> <span class="o">=</span> <span class="n">BasicAccessCode</span><span class="o">.</span><span class="n">new_codes</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">codes</span>
+<span class="go">set([&lt;BasicAccessCode: FC9384&gt;, &lt;BasicAccessCode: EG2934&gt;, &lt;BasicAccessCode: JB0532&gt;])</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>As you can see, there are two class methods that will create instances of
+<tt class="docutils literal"><span class="pre">BasicAccessCode</span></tt>. Note that code instances do not automatically create
+users in the database. So, how do you do that?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">codes</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">code</span><span class="o">.</span><span class="n">create_user</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="go">&lt;User: FC9384&gt;</span>
+<span class="go">&lt;User: EG2934&gt;</span>
+<span class="go">&lt;User: JB0532&gt;</span>
+</pre></div>
+</div>
+<p>At this point, there are three users in the system, ready to go. So, go to
+<a class="reference internal" href="step6.html"><em>Step 6: Run It!</em></a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Step 5: Adding Users</a><ul>
+<li><a class="reference internal" href="#accesscodes">AccessCodes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="step4.html"
+                        title="previous chapter">Step 4: Attaching the Views to URLs</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="step6.html"
+                        title="next chapter">Step 6: Run It!</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/tutorial/step5.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="step6.html" title="Step 6: Run It!"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="step4.html" title="Step 4: Attaching the Views to URLs"
+             >previous</a> |</li>
+        <li><a href="../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="index.html" >A <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Walkthrough</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Dennis O’Reilly.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

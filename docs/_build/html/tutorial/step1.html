@@ -1,0 +1,189 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Step 1: Installation &mdash; djangotailoring v0.5 documentation</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="djangotailoring v0.5 documentation" href="../index.html" />
+    <link rel="up" title="A djangotailoring Walkthrough" href="index.html" />
+    <link rel="next" title="Step 2: Bootstrapping your Django project" href="step2.html" />
+    <link rel="prev" title="A djangotailoring Walkthrough" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="step2.html" title="Step 2: Bootstrapping your Django project"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="A djangotailoring Walkthrough"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">A <tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Walkthrough</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="step-1-installation">
+<h1>Step 1: Installation<a class="headerlink" href="#step-1-installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Consider using <a class="reference external" href="http://www.virtualenv.org/">virtualenv</a> for this process.
+It keeps your installed packages isolated from the system python install,
+and is generally a best-practice when it comes to developing multiple
+projects on the same machine.</p>
+</div>
+<div class="section" id="django">
+<h3>Django<a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h3>
+<p>Download and install <a class="reference external" href="http://www.djangoproject.org/">Django</a> version 1.3 or
+greater. The easiest way to do this is using pip:</p>
+<div class="highlight-python"><pre>pip install Django</pre>
+</div>
+<p>If you have an earlier version of Django installed, use:</p>
+<div class="highlight-python"><pre>pip install -U Django</pre>
+</div>
+</div>
+<div class="section" id="tailoring2">
+<h3><tt class="docutils literal"><span class="pre">tailoring2</span></tt><a class="headerlink" href="#tailoring2" title="Permalink to this headline">¶</a></h3>
+<p>While you aren&#8217;t able to pip-install tailoring2, it does come with a
+setuptools <tt class="docutils literal"><span class="pre">setup.py</span></tt> script, making the install process fairly painless
+otherwise.</p>
+<p>The current best option is to check out the trunk of <tt class="docutils literal"><span class="pre">tailoring2</span></tt>, as the
+i18n features were added since the latest release was made. Assuming you have
+subversion installed, check out the tailoring2 bundle:</p>
+<div class="highlight-python"><pre>svn co https://yertle.chcr.med.umich.edu/svn/NextGenTailoring/engine/trunk/tailoring2</pre>
+</div>
+<p>In the tailoring2 folder, you can execute the following command to install:</p>
+<div class="highlight-python"><pre>python setup.py install</pre>
+</div>
+</div>
+<div class="section" id="surveytracking">
+<h3><tt class="docutils literal"><span class="pre">surveytracking</span></tt><a class="headerlink" href="#surveytracking" title="Permalink to this headline">¶</a></h3>
+<p>As the least mature dependency, <tt class="docutils literal"><span class="pre">surveytracking</span></tt> will have to be manually
+installed. By “installed” it means “checking out a revision directly into the
+site-packages folder”. This is, of course, a very sloppy way of doing things,
+but as of now, this is what we have.</p>
+<p>In your python installation (hopefully a virtualenv, as hinted at above), go
+to the folder <tt class="docutils literal"><span class="pre">lib/python2.x/site-packages</span></tt>. In there, execute:</p>
+<div class="highlight-python"><pre>svn co https://yertle.chcr.med.umich.edu/svn/NextGenTailoring/engine/trunk/surveytracking</pre>
+</div>
+<p>Gross, right? At least it’s installed.</p>
+</div>
+<div class="section" id="djangotailoring">
+<h3><tt class="docutils literal"><span class="pre">djangotailoring</span></tt><a class="headerlink" href="#djangotailoring" title="Permalink to this headline">¶</a></h3>
+<p>On to the app itself. As with tailoring2, you should be able to check out the
+app bundle and run <tt class="docutils literal"><span class="pre">setup.py</span></tt>:</p>
+<div class="highlight-python"><pre>svn co https://yertle.chcr.med.umich.edu/svn/djangotailoring/branches/django1.3-dev/django-tailoring</pre>
+</div>
+<p>Once again, from the django-tailoring folder, run:</p>
+<div class="highlight-python"><pre>python setup.py install</pre>
+</div>
+<p>Now that that&#8217;s complete, you should have all the packages necessary for using
+djangotailoring in your project. From here, let&#8217;s move on to <a class="reference internal" href="step2.html"><em>Step 2: Bootstrapping your Django project</em></a>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Step 1: Installation</a><ul>
+<li><a class="reference internal" href="#install">Install</a><ul>
+<li><a class="reference internal" href="#django">Django</a></li>
+<li><a class="reference internal" href="#tailoring2"><tt class="docutils literal"><span class="pre">tailoring2</span></tt></a></li>
+<li><a class="reference internal" href="#surveytracking"><tt class="docutils literal"><span class="pre">surveytracking</span></tt></a></li>
+<li><a class="reference internal" href="#djangotailoring"><tt class="docutils literal"><span class="pre">djangotailoring</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">A <tt class="docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Walkthrough</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="step2.html"
+                        title="next chapter">Step 2: Bootstrapping your Django project</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/tutorial/step1.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="step2.html" title="Step 2: Bootstrapping your Django project"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="A djangotailoring Walkthrough"
+             >previous</a> |</li>
+        <li><a href="../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="index.html" >A <tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Walkthrough</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Dennis O’Reilly.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

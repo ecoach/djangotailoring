@@ -1,0 +1,161 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>djangotailoring.views &mdash; djangotailoring v0.5 documentation</title>
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="djangotailoring v0.5 documentation" href="../../../index.html" />
+    <link rel="up" title="djangotailoring" href="../index.html" />
+    <link rel="next" title="djangotailoring.views.tailoring" href="tailoring.html" />
+    <link rel="prev" title="djangotailoring.subjects" href="../subjects.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tailoring.html" title="djangotailoring.views.tailoring"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../subjects.html" title="djangotailoring.subjects"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-djangotailoring.views">
+<span id="djangotailoring-views"></span><h1><tt class="docutils literal"><span class="pre">djangotailoring.views</span></tt><a class="headerlink" href="#module-djangotailoring.views" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tailoring.html"><tt class="docutils literal"><span class="pre">djangotailoring.views.tailoring</span></tt></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tailoring.html#views">Views</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tailoring.html#module-djangotailoring.views.tailoring">Base Views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tailoring.html#public-views">Public Views</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tailoring.html#mixins">Mixins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="protection.html"><tt class="docutils literal"><span class="pre">djangotailoring.views.protection</span></tt></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="protection.html#mixins">Mixins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="localized.html"><tt class="docutils literal"><span class="pre">djangotailoring.views.localized</span></tt></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="localized.html#search-order">Search Order</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="localized.html#localized-document-dictionaries">Localized Document Dictionaries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="localized.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="localized.html#views">Views</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="localized.html#base-views">Base Views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="localized.html#public-views">Public Views</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">views</span></tt> package of djangotailoring has three modules that contain
+generic views for different scenarios.</p>
+<ul class="simple">
+<li><a class="reference internal" href="tailoring.html#module-djangotailoring.views.tailoring" title="djangotailoring.views.tailoring"><tt class="xref py py-mod docutils literal"><span class="pre">djangotailoring.views.tailoring</span></tt></a> contains views for rendering
+templates with content derived from one or more message documents.</li>
+<li><a class="reference internal" href="localized.html#module-djangotailoring.views.localized" title="djangotailoring.views.localized"><tt class="xref py py-mod docutils literal"><span class="pre">djangotailoring.views.localized</span></tt></a> contains views that extend the
+views in the <tt class="docutils literal"><span class="pre">tailoring</span></tt> module by supporting the selection of message
+document based on an individual&#8217;s selected locale.</li>
+<li><a class="reference internal" href="protection.html#module-djangotailoring.views.protection" title="djangotailoring.views.protection"><tt class="xref py py-mod docutils literal"><span class="pre">djangotailoring.views.protection</span></tt></a> contains a view mixin useful for
+restricting access to a page to logged-in users.</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../subjects.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">djangotailoring.subjects</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tailoring.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">djangotailoring.views.tailoring</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/apps/djangotailoring/views/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tailoring.html" title="djangotailoring.views.tailoring"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../subjects.html" title="djangotailoring.subjects"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="../index.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Dennis O’Reilly.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

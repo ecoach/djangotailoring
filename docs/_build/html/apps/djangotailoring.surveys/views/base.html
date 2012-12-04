@@ -1,0 +1,772 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>djangotailoring.surveys.views.base &mdash; djangotailoring v0.5 documentation</title>
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="djangotailoring v0.5 documentation" href="../../../index.html" />
+    <link rel="up" title="djangotailoring.surveys.views" href="index.html" />
+    <link rel="next" title="djangotailoring.surveys.views.render" href="render.html" />
+    <link rel="prev" title="djangotailoring.surveys.views" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="render.html" title="djangotailoring.surveys.views.render"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="djangotailoring.surveys.views"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="../index.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring.surveys</span></tt></a> &raquo;</li>
+          <li><a href="index.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal"><span class="pre">djangotailoring.surveys.views</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-djangotailoring.surveys.views.base">
+<span id="djangotailoring-surveys-views-base"></span><h1><tt class="docutils literal"><span class="pre">djangotailoring.surveys.views.base</span></tt><a class="headerlink" href="#module-djangotailoring.surveys.views.base" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="background">
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
+<p>Survey View classes have a lot of complicated methods that are designed to be
+easily overridden and allow you to keep your mitts off of the nasty bits of
+survey rendering and error handling.</p>
+<p>Each Survey View is responsible for handling all of the pages for a particular
+Survey. Each request made to the view should have some way of communicating
+which page the user is on, and which user is requesting the page.</p>
+<p>By default, the values are derived as follows:</p>
+<ul class="simple">
+<li>The page is identified by a unique MTS Message ID of an element within the
+page, which is derived from a URL/Request parameter <tt class="docutils literal"><span class="pre">page_id</span></tt>.</li>
+<li>The user is identified by the
+<a class="reference internal" href="../../djangotailoring/subjects.html#djangotailoring.subjects.SubjectLoader" title="djangotailoring.subjects.SubjectLoader"><tt class="xref py py-class docutils literal"><span class="pre">djangotailoring.subjects.SubjectLoader</span></tt></a>-compatible ID returned by
+<a class="reference internal" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_user_id" title="djangotailoring.surveys.views.base.BaseSurveyView.get_user_id"><tt class="xref py py-meth docutils literal"><span class="pre">BaseSurveyView.get_user_id()</span></tt></a>.</li>
+</ul>
+</div>
+<div class="section" id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="djangotailoring.surveys.views.base.PageNotFound">
+<em class="property">exception </em><tt class="descclassname">djangotailoring.surveys.views.base.</tt><tt class="descname">PageNotFound</tt><a class="headerlink" href="#djangotailoring.surveys.views.base.PageNotFound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised by Survey View classes when the requested Page is not found in the
+current Survey document structure.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="djangotailoring.surveys.views.base.StateNotFound">
+<em class="property">exception </em><tt class="descclassname">djangotailoring.surveys.views.base.</tt><tt class="descname">StateNotFound</tt><a class="headerlink" href="#djangotailoring.surveys.views.base.StateNotFound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised by Survey View classes when no state is found for the page/user pair.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="basesurveyview-class">
+<h2>BaseSurveyView Class<a class="headerlink" href="#basesurveyview-class" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView">
+<em class="property">class </em><tt class="descclassname">djangotailoring.surveys.views.base.</tt><tt class="descname">BaseSurveyView</tt><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView" title="Permalink to this definition">¶</a></dt>
+<dd><p>A subclass of <tt class="xref py py-class docutils literal"><span class="pre">django.views.generic.base.TemplateView</span></tt> that will
+render a template with a survey ‘chunk’ per the request’s user and page
+pair.</p>
+<dl class="attribute">
+<dt>
+<tt class="descname">survey_manager = None</tt></dt>
+<dd><p>A reference to a <tt class="xref py py-class docutils literal"><span class="pre">surveytracking.classes.SurveyManager</span></tt> object.
+This is accessed by way of <a class="reference internal" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_survey_manager" title="djangotailoring.surveys.views.base.BaseSurveyView.get_survey_manager"><tt class="xref py py-meth docutils literal"><span class="pre">get_survey_manager()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">survey_id = None</tt></dt>
+<dd><p>A unique name of the current survey used when serializing State objects.
+This is accessed by way of <a class="reference internal" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_survey_id" title="djangotailoring.surveys.views.base.BaseSurveyView.get_survey_id"><tt class="xref py py-meth docutils literal"><span class="pre">get_survey_id()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">context_chunk_name = 'chunk'</tt></dt>
+<dd><p>The name of the <tt class="xref py py-class docutils literal"><span class="pre">djangotailoring.surveys.render.SurveyRenderChunk</span></tt>
+instance passed to the rendering context.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="attribute-getters">
+<h3>Attribute Getters<a class="headerlink" href="#attribute-getters" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_survey_id">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_survey_id</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_survey_id" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a string</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a unique identifier for the survey which is used to distinguish it
+from other surveys in the State serialization structure.</td>
+</tr>
+</tbody>
+</table>
+<p>By default, this returns <tt class="xref py py-attr docutils literal"><span class="pre">survey_id</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_user_id">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_user_id</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_user_id" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a string</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a user id which is used to locate the appropriate State for the
+current request. It should be compatible with a
+<a class="reference internal" href="../../djangotailoring/subjects.html#djangotailoring.subjects.SubjectLoader" title="djangotailoring.subjects.SubjectLoader"><tt class="xref py py-class docutils literal"><span class="pre">djangotailoring.subjects.SubjectLoader</span></tt></a>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>required</strong> This method must be overridden.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_survey_manager">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_survey_manager</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_survey_manager" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a <tt class="xref py py-class docutils literal"><span class="pre">surveytracking.classes.SurveyManager</span></tt> instance</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the active survey manager to handle page transitions and other
+survey mechanics.</td>
+</tr>
+</tbody>
+</table>
+<p>By default, this returns <tt class="xref py py-attr docutils literal"><span class="pre">survey_manager</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_project">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_project</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_project" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a <tt class="xref py py-class docutils literal"><span class="pre">tailoring2.project.BasicProject</span></tt> instance</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the current Project instance.</td>
+</tr>
+</tbody>
+</table>
+<p>By default, this is the current survey manager&#8217;s project.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_subject">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_subject</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_subject" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a <tt class="xref py py-class docutils literal"><span class="pre">tailoring2.subjects.Subject</span></tt> instance</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the current subject being used for the survey.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>required</strong> This method must be overridden.</p>
+<p>The subject <em>does not</em> need to be constantly updated with the responses from
+the survey, since those are automatically combined with the running survey
+data loaded from the current survey state in <a class="reference internal" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_request_subject" title="djangotailoring.surveys.views.base.BaseSurveyView.get_request_subject"><tt class="xref py py-meth docutils literal"><span class="pre">get_request_subject()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_request_subject">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_request_subject</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_request_subject" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a tuple of (a <tt class="xref py py-class docutils literal"><span class="pre">tailoring2.subjects.Subject</span></tt> instance,
+a list of subject generation errors)</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the current subject <em>with</em> all of the survey response data up to
+the current page of the survey, along with any errors in generating that
+subject.</td>
+</tr>
+</tbody>
+</table>
+<p>The subject is based on the current state data, and the subject returned by
+<a class="reference internal" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_subject" title="djangotailoring.surveys.views.base.BaseSurveyView.get_subject"><tt class="xref py py-meth docutils literal"><span class="pre">get_subject()</span></tt></a>. A new subject is created, so no damage is done to
+either the request data, or the subject returned from <a class="reference internal" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_subject" title="djangotailoring.surveys.views.base.BaseSurveyView.get_subject"><tt class="xref py py-meth docutils literal"><span class="pre">get_subject()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_tailoring_request">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_tailoring_request</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_tailoring_request" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a <a class="reference internal" href="../../djangotailoring/tailoringrequest.html#djangotailoring.tailoringrequest.TailoringRequest" title="djangotailoring.tailoringrequest.TailoringRequest"><tt class="xref py py-class docutils literal"><span class="pre">djangotailoring.tailoringrequest.TailoringRequest</span></tt></a>
+instance</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a TailoringRequest instance that <em>will be</em> modified to suit the
+current survey request&#8217;s needs.</td>
+</tr>
+</tbody>
+</table>
+<p>By default, it returns an empty TailoringRequest instance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_active_source">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_active_source</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_active_source" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a string</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the name of the source that data is inserted to.</td>
+</tr>
+</tbody>
+</table>
+<p>By default, it checks the TailoringRequest returned by
+<a class="reference internal" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_tailoring_request" title="djangotailoring.surveys.views.base.BaseSurveyView.get_tailoring_request"><tt class="xref py py-meth docutils literal"><span class="pre">get_tailoring_request()</span></tt></a> for a <tt class="xref py py-attr docutils literal"><span class="pre">default_source</span></tt> value. If that
+doesn’t exist, it returns the source of the current survey manager.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_current_page">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_current_page</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_current_page" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a <tt class="xref py py-class docutils literal"><span class="pre">surveytracking.classes.Page</span></tt> instance</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the page for the current request.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="traversal-handlers">
+<h3>Traversal Handlers<a class="headerlink" href="#traversal-handlers" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.can_pass_page">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">can_pass_page</tt><big>(</big><em>self</em><span class="optional">[</span>, <em>subject=None</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.can_pass_page" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>subject</strong> (a <tt class="xref py py-class docutils literal"><span class="pre">tailoring2.subjects.Subject</span></tt> instance) &#8211; the subject to test against.</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a boolean</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">whether <tt class="docutils literal"><span class="pre">subject</span></tt> can advance beyond the current page.</td>
+</tr>
+</tbody>
+</table>
+<p>A user can pass the page if there are no validation errors on the current
+page. If there are no previous errors, and there are any loose validation
+errors, a user cannot pass the current page.</p>
+<p>If subject is None, then it will test with the subject made with
+<a class="reference internal" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_request_subject" title="djangotailoring.surveys.views.base.BaseSurveyView.get_request_subject"><tt class="xref py py-meth docutils literal"><span class="pre">get_request_subject()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_render_chunk">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_render_chunk</tt><big>(</big><em>self</em><span class="optional">[</span>, <em>show_errors=None</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_render_chunk" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">SurveyRenderChunk</span></tt> instance</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the chunk that is passed to the template context for the current
+request.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="navigation-handlers">
+<h3>Navigation Handlers<a class="headerlink" href="#navigation-handlers" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_base_url">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_base_url</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_base_url" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a string</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the absolute URL to this survey view, with the page_id stubbed out
+as the string-formatting parameter &#8216;%s&#8217;.</td>
+</tr>
+</tbody>
+</table>
+<p>This is used to build URLs for redirects within the current survey view.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.url_for_page_id">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">url_for_page_id</tt><big>(</big><em>self</em>, <em>page_id</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.url_for_page_id" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>page_id</strong> &#8211; the ID for the page you wish to have the URL for</td>
+</tr>
+<tr class="field"><th class="field-name">Type :</th><td class="field-body">a string</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a string</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the absolute URL to the passed survey page.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_previous_url">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_previous_url</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_previous_url" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a string</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the absolute URL to the previous survey page.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.redirect">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">redirect</tt><big>(</big><em>self</em>, <em>page=None</em>, <em>page_id=None</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.redirect" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>page</strong> (a <tt class="xref py py-class docutils literal"><span class="pre">surveytracking.classes.Page</span></tt> insance) &#8211; the page you wish to redirect to</li>
+<li><strong>page_id</strong> (<em>a string</em>) &#8211; the ID of the page you wish to redirect to</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">a <tt class="xref py py-class docutils literal"><span class="pre">django.http.HttpResponse</span></tt></p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a response that temporarily redirects the user to the requested
+page.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="request-data-conversion">
+<h3>Request Data Conversion<a class="headerlink" href="#request-data-conversion" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_request_data">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_request_data</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_request_data" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a <tt class="xref py py-class docutils literal"><span class="pre">django.http.QueryDict</span></tt> instance</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the Query dictionary to search for survey data.</td>
+</tr>
+</tbody>
+</table>
+<p>By default, this returns <tt class="xref py py-attr docutils literal"><span class="pre">self.request.POST</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_request_survey_data">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_request_survey_data</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_request_survey_data" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a tuple of (dictionary, list of errors)</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a converted set of survey answers found in the request data.</td>
+</tr>
+</tbody>
+</table>
+<p>This method packs a serious punch. All data in the QueryDict returned by
+<a class="reference internal" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_request_data" title="djangotailoring.surveys.views.base.BaseSurveyView.get_request_data"><tt class="xref py py-meth docutils literal"><span class="pre">get_request_data()</span></tt></a> is sifted through and coercion from string to
+MTS Dictionary type is attempted. Any errors found during that conversion
+are caught and inserted into the list of errors returned as well.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="view-handlers">
+<h3>View Handlers<a class="headerlink" href="#view-handlers" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.can_access_survey">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">can_access_survey</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.can_access_survey" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a boolean</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">whether the user requesting the current page should be allowed to
+access the current survey.</td>
+</tr>
+</tbody>
+</table>
+<p>If this is false, the view will return the result of
+<a class="reference internal" href="#djangotailoring.surveys.views.base.BaseSurveyView.handle_bad_page_request" title="djangotailoring.surveys.views.base.BaseSurveyView.handle_bad_page_request"><tt class="xref py py-meth docutils literal"><span class="pre">handle_bad_page_request()</span></tt></a> is given to the client.</p>
+<p>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> by default.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.handle_bad_page_request">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">handle_bad_page_request</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.handle_bad_page_request" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a <tt class="xref py py-class docutils literal"><span class="pre">django.http.HttpResponse</span></tt> instance</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a response that indicates that a page is inaccessible.</td>
+</tr>
+</tbody>
+</table>
+<p>Returns a “403 Forbidden” response by default.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.handle_end_of_survey">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">handle_end_of_survey</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.handle_end_of_survey" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a <tt class="xref py py-class docutils literal"><span class="pre">django.http.HttpResponse</span></tt> instance</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a response that indicates that the survey has been completed,
+such as redirecting to an acknowledgement page.</td>
+</tr>
+</tbody>
+</table>
+<p>Redirects a user to the root page of the site (<tt class="docutils literal"><span class="pre">/</span></tt>) by default.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.on_successful_page_request">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">on_successful_page_request</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.on_successful_page_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Once a request is determined to be for a known page with a known State, this
+method is called.</p>
+<p>There is no default implementation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.on_valid_submission">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">on_valid_submission</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.on_valid_submission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Once a POST request is determined to be free of validation errors, this
+method is called.</p>
+<p>There is no default implementation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.on_invalid_submission">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">on_invalid_submission</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.on_invalid_submission" title="Permalink to this definition">¶</a></dt>
+<dd><p>If a POST request is determined to have one or more validation errors, this
+method is called.</p>
+<p>There is no default implementation.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="state-handlers">
+<h3>State handlers<a class="headerlink" href="#state-handlers" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_current_state">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_current_state</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_current_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_latest_state">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_latest_state</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_latest_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.create_next_state">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">create_next_state</tt><big>(</big><em>self</em>, <em>next_page</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.create_next_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.create_initial_state">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">create_initial_state</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.create_initial_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.state_subject_data">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">state_subject_data</tt><big>(</big><em>self</em>, <em>state</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.state_subject_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.state_has_validation_errors">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">state_has_validation_errors</tt><big>(</big><em>self</em>, <em>state</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.state_has_validation_errors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.on_validation_error">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">on_validation_error</tt><big>(</big><em>self</em>, <em>state</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.on_validation_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.get_previous_page">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">get_previous_page</tt><big>(</big><em>self</em>, <em>state</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.get_previous_page" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.redirect_to_state">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">redirect_to_state</tt><big>(</big><em>self</em>, <em>state</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.redirect_to_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.set_state_request_data">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">set_state_request_data</tt><big>(</big><em>self</em>, <em>state</em>, <em>data</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.set_state_request_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.save_state">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">save_state</tt><big>(</big><em>self</em>, <em>state</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.save_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.BaseSurveyView.state_for_restart">
+<tt class="descclassname">BaseSurveyView.</tt><tt class="descname">state_for_restart</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.BaseSurveyView.state_for_restart" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+<div class="section" id="simplesurveyview-class">
+<h2>SimpleSurveyView Class<a class="headerlink" href="#simplesurveyview-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="djangotailoring.surveys.views.base.SimpleSurveyView">
+<em class="property">class </em><tt class="descclassname">djangotailoring.surveys.views.base.</tt><tt class="descname">SimpleSurveyView</tt><a class="headerlink" href="#djangotailoring.surveys.views.base.SimpleSurveyView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subclass of <a class="reference internal" href="#djangotailoring.surveys.views.base.BaseSurveyView" title="djangotailoring.surveys.views.base.BaseSurveyView"><tt class="xref py py-class docutils literal"><span class="pre">BaseSurveyView</span></tt></a> to create a self-contained Survey view
+for a specified Survey Document and source.</p>
+<dl class="attribute">
+<dt id="djangotailoring.surveys.views.base.SimpleSurveyView.survey_document">
+<tt class="descname">survey_document</tt><a class="headerlink" href="#djangotailoring.surveys.views.base.SimpleSurveyView.survey_document" title="Permalink to this definition">¶</a></dt>
+<dd><p>A path to an MTS survey, optionally relative to the current project.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="djangotailoring.surveys.views.base.SimpleSurveyView.source">
+<tt class="descname">source</tt><a class="headerlink" href="#djangotailoring.surveys.views.base.SimpleSurveyView.source" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string representing the name of the source that survey data will be
+stored.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="singlepagesurveyview-class">
+<h2>SinglePageSurveyView Class<a class="headerlink" href="#singlepagesurveyview-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="djangotailoring.surveys.views.base.SinglePageSurveyView">
+<em class="property">class </em><tt class="descclassname">djangotailoring.surveys.views.base.</tt><tt class="descname">SinglePageSurveyView</tt><a class="headerlink" href="#djangotailoring.surveys.views.base.SinglePageSurveyView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subclass of <a class="reference internal" href="#djangotailoring.surveys.views.base.BaseSurveyView" title="djangotailoring.surveys.views.base.BaseSurveyView"><tt class="xref py py-class docutils literal"><span class="pre">BaseSurveyView</span></tt></a> to build a view that assumes that
+the Survey document consists of a single page. This removes the requirement
+that the view have a page_id keyword argument. Attributes operate the same
+as <a class="reference internal" href="#djangotailoring.surveys.views.base.SimpleSurveyView" title="djangotailoring.surveys.views.base.SimpleSurveyView"><tt class="xref py py-class docutils literal"><span class="pre">SimpleSurveyView</span></tt></a> as it also derives from
+<a class="reference internal" href="#djangotailoring.surveys.views.base.NoManagerMixin" title="djangotailoring.surveys.views.base.NoManagerMixin"><tt class="xref py py-class docutils literal"><span class="pre">NoManagerMixin</span></tt></a>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="mixins">
+<h2>Mixins<a class="headerlink" href="#mixins" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="djangotailoring.surveys.views.base.AutoSaveSubjectDataMixin">
+<em class="property">class </em><tt class="descclassname">djangotailoring.surveys.views.base.</tt><tt class="descname">AutoSaveSubjectDataMixin</tt><a class="headerlink" href="#djangotailoring.surveys.views.base.AutoSaveSubjectDataMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls save_subject when a user submits a valid request on a survey page.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="djangotailoring.surveys.views.base.NoManagerMixin">
+<em class="property">class </em><tt class="descclassname">djangotailoring.surveys.views.base.</tt><tt class="descname">NoManagerMixin</tt><a class="headerlink" href="#djangotailoring.surveys.views.base.NoManagerMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatically creates a SurveyManager based on two parameters for use
+in a SurveyView. Simplifies the creation of a survey view down to a single
+subclass with class attributes rather than having to create a manager
+out-of-band.</p>
+<dl class="attribute">
+<dt>
+<tt class="descname">survey_document = None</tt></dt>
+<dd><p>A path to an MTS survey, optionally relative to the current project.
+This is accessed by way of <a class="reference internal" href="#djangotailoring.surveys.views.base.NoManagerMixin.get_survey_document" title="djangotailoring.surveys.views.base.NoManagerMixin.get_survey_document"><tt class="xref py py-meth docutils literal"><span class="pre">get_survey_document()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">source = None</tt></dt>
+<dd><p>A string representing the name of the source that survey data will be
+stored. This is accessed by way of <a class="reference internal" href="#djangotailoring.surveys.views.base.NoManagerMixin.get_source" title="djangotailoring.surveys.views.base.NoManagerMixin.get_source"><tt class="xref py py-meth docutils literal"><span class="pre">get_source()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.NoManagerMixin.get_survey_document">
+<tt class="descname">get_survey_document</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.NoManagerMixin.get_survey_document" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a string</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a path to an MTS sruvey document.</td>
+</tr>
+</tbody>
+</table>
+<p>By default, this returns <tt class="xref py py-attr docutils literal"><span class="pre">survey_document</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.base.NoManagerMixin.get_source">
+<tt class="descname">get_source</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.base.NoManagerMixin.get_source" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a string</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a string identifying the active source for the survey.</td>
+</tr>
+</tbody>
+</table>
+<p>By default, this returns <tt class="xref py py-attr docutils literal"><span class="pre">source</span></tt>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">djangotailoring.surveys.views.base</span></tt></a><ul>
+<li><a class="reference internal" href="#background">Background</a></li>
+<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li><a class="reference internal" href="#basesurveyview-class">BaseSurveyView Class</a><ul>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
+<li><a class="reference internal" href="#attribute-getters">Attribute Getters</a></li>
+<li><a class="reference internal" href="#traversal-handlers">Traversal Handlers</a></li>
+<li><a class="reference internal" href="#navigation-handlers">Navigation Handlers</a></li>
+<li><a class="reference internal" href="#request-data-conversion">Request Data Conversion</a></li>
+<li><a class="reference internal" href="#view-handlers">View Handlers</a></li>
+<li><a class="reference internal" href="#state-handlers">State handlers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#simplesurveyview-class">SimpleSurveyView Class</a></li>
+<li><a class="reference internal" href="#singlepagesurveyview-class">SinglePageSurveyView Class</a></li>
+<li><a class="reference internal" href="#mixins">Mixins</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">djangotailoring.surveys.views</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="render.html"
+                        title="next chapter"><tt class="docutils literal docutils literal"><span class="pre">djangotailoring.surveys.views.render</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/apps/djangotailoring.surveys/views/base.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="render.html" title="djangotailoring.surveys.views.render"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="djangotailoring.surveys.views"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="../index.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring.surveys</span></tt></a> &raquo;</li>
+          <li><a href="index.html" ><tt class="docutils literal docutils literal docutils literal"><span class="pre">djangotailoring.surveys.views</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Dennis O’Reilly.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

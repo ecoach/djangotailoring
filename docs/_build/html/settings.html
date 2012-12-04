@@ -1,0 +1,165 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Settings &mdash; djangotailoring v0.5 documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="djangotailoring v0.5 documentation" href="index.html" />
+    <link rel="next" title="The djangotailoring Applications" href="apps/index.html" />
+    <link rel="prev" title="Step 6: Run It!" href="tutorial/step6.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apps/index.html" title="The djangotailoring Applications"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tutorial/step6.html" title="Step 6: Run It!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">djangotailoring v0.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-settings">
+<span id="settings"></span><h1>Settings<a class="headerlink" href="#module-settings" title="Permalink to this headline">¶</a></h1>
+<p>Djangotailoring looks for a handful of settings in the Django <tt class="docutils literal"><span class="pre">settings</span></tt>
+module to perform the tailoring throughout the application.</p>
+<dl class="data">
+<dt id="settings.TAILORING2_PROJECT_ROOT">
+<tt class="descclassname">settings.</tt><tt class="descname">TAILORING2_PROJECT_ROOT</tt><a class="headerlink" href="#settings.TAILORING2_PROJECT_ROOT" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>required</strong> The absolute path to the root folder of your MTS project.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="settings.TAILORING2_PROJECT_CONFIG">
+<tt class="descclassname">settings.</tt><tt class="descname">TAILORING2_PROJECT_CONFIG</tt><a class="headerlink" href="#settings.TAILORING2_PROJECT_CONFIG" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path to a tailoring2 config file used to instantiate the project.  If a
+relative path is given, it is assumed to be relative to
+<a class="reference internal" href="#settings.TAILORING2_PROJECT_ROOT" title="settings.TAILORING2_PROJECT_ROOT"><tt class="xref py py-data docutils literal"><span class="pre">TAILORING2_PROJECT_ROOT</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="settings.TAILORING2_DICTIONARY">
+<tt class="descclassname">settings.</tt><tt class="descname">TAILORING2_DICTIONARY</tt><a class="headerlink" href="#settings.TAILORING2_DICTIONARY" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path to the dictionary file for your MTS project. If a relative path is
+given, it is assumed to be relative to <a class="reference internal" href="#settings.TAILORING2_PROJECT_ROOT" title="settings.TAILORING2_PROJECT_ROOT"><tt class="xref py py-data docutils literal"><span class="pre">TAILORING2_PROJECT_ROOT</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="settings.TAILORING2_CUSTOMIZATION_MODULE">
+<tt class="descclassname">settings.</tt><tt class="descname">TAILORING2_CUSTOMIZATION_MODULE</tt><a class="headerlink" href="#settings.TAILORING2_CUSTOMIZATION_MODULE" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path to the application.py customization module for your MTS project. If
+a relative path is given, it is assumed to be relative to
+<a class="reference internal" href="#settings.TAILORING2_PROJECT_ROOT" title="settings.TAILORING2_PROJECT_ROOT"><tt class="xref py py-data docutils literal"><span class="pre">TAILORING2_PROJECT_ROOT</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="settings.TAILORING2_SUBJECT_LOADER_CLASS">
+<tt class="descclassname">settings.</tt><tt class="descname">TAILORING2_SUBJECT_LOADER_CLASS</tt><a class="headerlink" href="#settings.TAILORING2_SUBJECT_LOADER_CLASS" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of a <a class="reference internal" href="apps/djangotailoring/subjects.html#djangotailoring.subjects.SubjectLoader" title="djangotailoring.subjects.SubjectLoader"><tt class="xref py py-class docutils literal"><span class="pre">djangotailoring.subjects.SubjectLoader</span></tt></a> class to use
+for loading and storing subjects. By default, it will be set to
+<cite>&#8216;djangotailoring.subjects.SerializedSubjectLoader&#8217;</cite></p>
+</dd></dl>
+
+<dl class="data">
+<dt id="settings.TAILORING2_DEBUG">
+<tt class="descclassname">settings.</tt><tt class="descname">TAILORING2_DEBUG</tt><a class="headerlink" href="#settings.TAILORING2_DEBUG" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Python boolean that globally sets whether djangotailoring render tags
+also produce a list of tailoring2 ProcessingError messages. This can be
+overridden by using the <a class="reference internal" href="apps/djangotailoring/templatetags.html#tailoring2-debug"><em>tailoring2_debug</em></a> tag.</p>
+</dd></dl>
+
+<p>To work, <a class="reference internal" href="#settings.TAILORING2_PROJECT_ROOT" title="settings.TAILORING2_PROJECT_ROOT"><tt class="xref py py-data docutils literal"><span class="pre">TAILORING2_PROJECT_ROOT</span></tt></a> is required and either
+<a class="reference internal" href="#settings.TAILORING2_PROJECT_CONFIG" title="settings.TAILORING2_PROJECT_CONFIG"><tt class="xref py py-data docutils literal"><span class="pre">TAILORING2_PROJECT_CONFIG</span></tt></a> or the combination of
+<a class="reference internal" href="#settings.TAILORING2_DICTIONARY" title="settings.TAILORING2_DICTIONARY"><tt class="xref py py-data docutils literal"><span class="pre">TAILORING2_DICTIONARY</span></tt></a> and <a class="reference internal" href="#settings.TAILORING2_CUSTOMIZATION_MODULE" title="settings.TAILORING2_CUSTOMIZATION_MODULE"><tt class="xref py py-data docutils literal"><span class="pre">TAILORING2_CUSTOMIZATION_MODULE</span></tt></a> can
+be provided to initialize a project with specific parameters.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tutorial/step6.html"
+                        title="previous chapter">Step 6: Run It!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="apps/index.html"
+                        title="next chapter">The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/settings.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apps/index.html" title="The djangotailoring Applications"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tutorial/step6.html" title="Step 6: Run It!"
+             >previous</a> |</li>
+        <li><a href="index.html">djangotailoring v0.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Dennis O’Reilly.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,199 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>djangotailoring.views.protection &mdash; djangotailoring v0.5 documentation</title>
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="djangotailoring v0.5 documentation" href="../../../index.html" />
+    <link rel="up" title="djangotailoring.views" href="index.html" />
+    <link rel="next" title="djangotailoring.views.localized" href="localized.html" />
+    <link rel="prev" title="djangotailoring.views.tailoring" href="tailoring.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="localized.html" title="djangotailoring.views.localized"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tailoring.html" title="djangotailoring.views.tailoring"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="../index.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt></a> &raquo;</li>
+          <li><a href="index.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring.views</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-djangotailoring.views.protection">
+<span id="djangotailoring-views-protection"></span><h1><tt class="docutils literal"><span class="pre">djangotailoring.views.protection</span></tt><a class="headerlink" href="#module-djangotailoring.views.protection" title="Permalink to this headline">¶</a></h1>
+<p>Protection provides a pair of Mixin classes that automatically redirect users
+in a particular state when accessing the page.</p>
+<div class="section" id="mixins">
+<h2>Mixins<a class="headerlink" href="#mixins" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="djangotailoring.views.protection.UserPassesTestMixin">
+<em class="property">class </em><tt class="descclassname">djangotailoring.views.protection.</tt><tt class="descname">UserPassesTestMixin</tt><a class="headerlink" href="#djangotailoring.views.protection.UserPassesTestMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>A mix-in class that validates that the requesting user meets a certain set
+of criteria. This leverages Django’s
+<tt class="xref py py-func docutils literal"><span class="pre">django.contrib.auth.decorators.user_passes_test()</span></tt> decorator. The
+attributes below are passed to the decorator as well. The test is provided
+by overriding the <a class="reference internal" href="#djangotailoring.views.protection.UserPassesTestMixin.user_passes_test" title="djangotailoring.views.protection.UserPassesTestMixin.user_passes_test"><tt class="xref py py-meth docutils literal"><span class="pre">user_passes_test()</span></tt></a> method.</p>
+<dl class="attribute">
+<dt id="djangotailoring.views.protection.UserPassesTestMixin.login_url">
+<tt class="descname">login_url</tt><a class="headerlink" href="#djangotailoring.views.protection.UserPassesTestMixin.login_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference external" href="http://docs.djangoproject.com/en/1.3/topics/auth/#the-login-required-decorator">the Django documentation for login_required</a>
+for more information.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="djangotailoring.views.protection.UserPassesTestMixin.redirect_field_name">
+<tt class="descname">redirect_field_name</tt><a class="headerlink" href="#djangotailoring.views.protection.UserPassesTestMixin.redirect_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference external" href="http://docs.djangoproject.com/en/1.3/topics/auth/#the-login-required-decorator">the Django documentation for login_required</a>
+for more information.</p>
+</dd></dl>
+
+<p>In addition, the following methods provide access to the above attributes:</p>
+<dl class="method">
+<dt id="djangotailoring.views.protection.UserPassesTestMixin.get_login_url">
+<tt class="descname">get_login_url</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.views.protection.UserPassesTestMixin.get_login_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used when determining what to pass as the <tt class="docutils literal"><span class="pre">login_url</span></tt> to the test
+decorator. By default, returns <a class="reference internal" href="#djangotailoring.views.protection.UserPassesTestMixin.login_url" title="djangotailoring.views.protection.UserPassesTestMixin.login_url"><tt class="xref py py-attr docutils literal"><span class="pre">login_url</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.views.protection.UserPassesTestMixin.get_redirect_field_name">
+<tt class="descname">get_redirect_field_name</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.views.protection.UserPassesTestMixin.get_redirect_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used when determining what to pass as the <tt class="docutils literal"><span class="pre">redirect_field_name</span></tt> to the
+test decorator. By default, returns <a class="reference internal" href="#djangotailoring.views.protection.UserPassesTestMixin.redirect_field_name" title="djangotailoring.views.protection.UserPassesTestMixin.redirect_field_name"><tt class="xref py py-attr docutils literal"><span class="pre">redirect_field_name</span></tt></a>.</p>
+</dd></dl>
+
+<p>Finally, the actual test that is performed on the user is done in:</p>
+<dl class="method">
+<dt id="djangotailoring.views.protection.UserPassesTestMixin.user_passes_test">
+<tt class="descname">user_passes_test</tt><big>(</big><em>self</em>, <em>user</em><big>)</big><a class="headerlink" href="#djangotailoring.views.protection.UserPassesTestMixin.user_passes_test" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a boolean</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">whether <tt class="docutils literal"><span class="pre">user</span></tt> should be able to access the view.</td>
+</tr>
+</tbody>
+</table>
+<p>By default, returns <tt class="xref docutils literal"><span class="pre">True</span></tt>. For more information, see
+<a class="reference external" href="http://docs.djangoproject.com/en/1.3/topics/auth/#django.contrib.auth.decorators.user_passes_test">the user_passes_test documentation</a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="djangotailoring.views.protection.LoginRequiredMixin">
+<em class="property">class </em><tt class="descclassname">djangotailoring.views.protection.</tt><tt class="descname">LoginRequiredMixin</tt><a class="headerlink" href="#djangotailoring.views.protection.LoginRequiredMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>A mix-in class that forces any access of the implementing view
+class to be accessible only to logged-in users. The behavior is the same as
+django’s <tt class="xref py py-func docutils literal"><span class="pre">django.contrib.auth.decorators.login_required()</span></tt> decorator.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">djangotailoring.views.protection</span></tt></a><ul>
+<li><a class="reference internal" href="#mixins">Mixins</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tailoring.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">djangotailoring.views.tailoring</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="localized.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">djangotailoring.views.localized</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/apps/djangotailoring/views/protection.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="localized.html" title="djangotailoring.views.localized"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tailoring.html" title="djangotailoring.views.tailoring"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="../index.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt></a> &raquo;</li>
+          <li><a href="index.html" ><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring.views</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Dennis O’Reilly.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

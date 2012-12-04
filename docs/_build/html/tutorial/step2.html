@@ -1,0 +1,282 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Step 2: Bootstrapping your Django project &mdash; djangotailoring v0.5 documentation</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="djangotailoring v0.5 documentation" href="../index.html" />
+    <link rel="up" title="A djangotailoring Walkthrough" href="index.html" />
+    <link rel="next" title="Step 3: Building Up Views" href="step3.html" />
+    <link rel="prev" title="Step 1: Installation" href="step1.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="step3.html" title="Step 3: Building Up Views"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="step1.html" title="Step 1: Installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">A <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Walkthrough</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="step-2-bootstrapping-your-django-project">
+<h1>Step 2: Bootstrapping your Django project<a class="headerlink" href="#step-2-bootstrapping-your-django-project" title="Permalink to this headline">¶</a></h1>
+<p>In this step, you will create an MTS project, as well as a Django project and
+enable djangotailoring linking the two together.</p>
+<div class="section" id="making-your-mts-project">
+<h2>Making Your MTS Project<a class="headerlink" href="#making-your-mts-project" title="Permalink to this headline">¶</a></h2>
+<p>For this walkthrough, it will be easiest to simply use the built-in
+MTS Sample Project.</p>
+<ul class="simple">
+<li>In MTS, go to the <em>File</em> menu and select ‘New’ ► ‘MTS - Project Sample’.</li>
+</ul>
+<p>Feel free to name it whatever you&#8217;d like.</p>
+<p>Now, you need to find the path to the MTS project. This is simple enough:</p>
+<ul class="simple">
+<li>Right-/Control-click on the project folder in the MTS Project Explorer and
+select the ‘Properties…’ option at the bottom of the menu.</li>
+</ul>
+<p>On the right side of the information dialog that appears, there will be a
+<em>Location</em> field. You can select the full path to the project listed there,
+and use ⌘-C to copy it to the clipboard to save for our next step.</p>
+</div>
+<div class="section" id="making-your-django-project">
+<h2>Making Your Django Project<a class="headerlink" href="#making-your-django-project" title="Permalink to this headline">¶</a></h2>
+<p>Create a Django project using the standard bootstraping method Django
+provides:</p>
+<div class="highlight-python"><pre>django-admin.py startproject dttutorial</pre>
+</div>
+<p>You may call your project anything you wish, for this tutorial, it’s assumed
+that it is named as above: <cite>dttutorial</cite>.</p>
+<ul class="simple">
+<li>Dive into the project folder.</li>
+</ul>
+<div class="section" id="create-your-main-django-app">
+<h3>Create Your Main Django App<a class="headerlink" href="#create-your-main-django-app" title="Permalink to this headline">¶</a></h3>
+<p>In this tutorial, there will be very little code that you have to write on
+your own. Great, right? However, you will need to at least set up an
+application to house at least one thing for the whole system to work.</p>
+<ul>
+<li><p class="first">Begin by starting an app the usual way:</p>
+<div class="highlight-python"><pre>python manage.py startapp main</pre>
+</div>
+<p>It could have been named anything you’d like, but for this tutorial, it will
+be called ‘main’.</p>
+</li>
+<li><p class="first">Edit <tt class="docutils literal"><span class="pre">main/models.py</span></tt> and drop in the following code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="kn">from</span> <span class="nn">djangotailoring.userprofile</span> <span class="kn">import</span> <span class="p">(</span><span class="n">BaseUserProfile</span><span class="p">,</span>
+    <span class="n">register_profile_post_save_handler</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">UserProfile</span><span class="p">(</span><span class="n">BaseUserProfile</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="n">register_profile_post_save_handler</span><span class="p">(</span><span class="n">UserProfile</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Wait, what did you just do? You created a class, but didn’t define anything
+in it? You are creating a Model class that will be used as the profile in
+the Django Auth framework. Feel free to
+<a class="reference external" href="http://docs.djangoproject.com/en/1.3/topics/auth/#auth-profiles">read up on it</a>.
+<tt class="docutils literal"><span class="pre">djangotailoring</span></tt> provides a base class and utility function to make
+tailoring on the logged-in user as simple as possible.  The utility function
+<tt class="docutils literal"><span class="pre">register_profile_post_save_handler</span></tt>, ensures that whenever a user is
+created, your <tt class="docutils literal"><span class="pre">UserProfile</span></tt> object is automatically created and associated
+with that user without any other intervention.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="tweeking-settings-py">
+<h3>Tweeking <tt class="docutils literal"><span class="pre">settings.py</span></tt><a class="headerlink" href="#tweeking-settings-py" title="Permalink to this headline">¶</a></h3>
+<p>Now is the time when you enable <tt class="docutils literal"><span class="pre">djangotailoring</span></tt> in your project, and hook
+it up to your MTS project. Start by opening the <tt class="docutils literal"><span class="pre">settings.py</span></tt> file.</p>
+<ul>
+<li><p class="first">Ammend the INSTALLED_APPS to include the
+applications:</p>
+<div class="highlight-python"><pre>INSTALLED_APPS = (
+  ...
+  'djangotailoring',
+  'djangotailoring.accounts',
+  'djangotailoring.surveys',
+  'djangotailoring.tracking',
+  'main',
+)</pre>
+</div>
+</li>
+<li><p class="first">Re-define the AUTHENTICATION_BACKENDS:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">AUTHENTICATION_BACKENDS</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;djangotailoring.accounts.backends.AccessCodeBackend&#39;</span><span class="p">,)</span>
+</pre></div>
+</div>
+<p>This allows us to log users in with just an access code.</p>
+</li>
+<li><p class="first">Choose the a database backend:</p>
+<div class="highlight-python"><pre>DATABASES = {
+  'default': {
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': 'dttutorial.db',
+    ...
+  }
+
+}</pre>
+</div>
+<p>Like the project name, the database name can be anything you’d like, and
+placed anywhere on your disk, if it&#8217;s a sqlite3 database. If you’re feeling
+adventurous, and want to use MySQL, for instance, go for it.</p>
+</li>
+<li><p class="first">Tell <tt class="docutils literal"><span class="pre">djangotailoring</span></tt> where your MTS project is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">TAILORING2_PROJECT_ROOT</span> <span class="o">=</span> <span class="s">&#39;&lt;path to your MTS project (⌘-V to paste)&gt;&#39;</span>
+</pre></div>
+</div>
+<p>This is the magic that informs <tt class="docutils literal"><span class="pre">djangotailoring</span></tt> where your MTS project is
+and where to locate its resources.</p>
+</li>
+<li><p class="first">Tell Django’s Auth framework where your Profile Model class is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">AUTH_PROFILE_MODULE</span> <span class="o">=</span> <span class="s">&#39;main.UserProfile&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Tell Django where to send non-logged-in users:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">LOGIN_URL</span> <span class="o">=</span> <span class="s">&#39;/login/&#39;</span>
+</pre></div>
+</div>
+<p>Whenever a user requests a resource that is protected, they will be
+redirected to this url for authentication.</p>
+</li>
+<li><p class="first">Tell Django where to send users once they&#8217;re logged-in:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">LOGIN_REDIRECT_URL</span> <span class="o">=</span> <span class="s">&#39;/survey/&#39;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="running-syncdb">
+<h3>Running <tt class="docutils literal"><span class="pre">syncdb</span></tt><a class="headerlink" href="#running-syncdb" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Run syncdb on your project:</p>
+<div class="highlight-python"><pre>python manage.py syncdb</pre>
+</div>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Don’t create a superuser yet. Due to the way you created the UserProfile
+model above, creating a user while generating the database may not work.</p>
+</div>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">If you have <a class="reference external" href="http://south.aeracode.org/">South</a> installed (good for you,
+by the way), you need to take the extra step and run the <tt class="docutils literal"><span class="pre">migrate</span></tt>
+command, as djangotailoring is developed with South migrations.</p>
+</div>
+<p>Now that you’ve set up your projects, you can go on to <a class="reference internal" href="step3.html"><em>Step 3: Building Up Views</em></a>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Step 2: Bootstrapping your Django project</a><ul>
+<li><a class="reference internal" href="#making-your-mts-project">Making Your MTS Project</a></li>
+<li><a class="reference internal" href="#making-your-django-project">Making Your Django Project</a><ul>
+<li><a class="reference internal" href="#create-your-main-django-app">Create Your Main Django App</a></li>
+<li><a class="reference internal" href="#tweeking-settings-py">Tweeking <tt class="docutils literal"><span class="pre">settings.py</span></tt></a></li>
+<li><a class="reference internal" href="#running-syncdb">Running <tt class="docutils literal"><span class="pre">syncdb</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="step1.html"
+                        title="previous chapter">Step 1: Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="step3.html"
+                        title="next chapter">Step 3: Building Up Views</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/tutorial/step2.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="step3.html" title="Step 3: Building Up Views"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="step1.html" title="Step 1: Installation"
+             >previous</a> |</li>
+        <li><a href="../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="index.html" >A <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Walkthrough</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Dennis O’Reilly.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

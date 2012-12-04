@@ -1,0 +1,178 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Management Commands &mdash; djangotailoring v0.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="djangotailoring v0.5 documentation" href="../../index.html" />
+    <link rel="up" title="djangotailoring" href="index.html" />
+    <link rel="next" title="djangotailoring.accounts" href="../djangotailoring.accounts/index.html" />
+    <link rel="prev" title="djangotailoring.util" href="util.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../djangotailoring.accounts/index.html" title="djangotailoring.accounts"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="util.html" title="djangotailoring.util"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U"><tt class="docutils literal docutils literal"><span class="pre">djangotailoring</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="management-commands">
+<h1>Management Commands<a class="headerlink" href="#management-commands" title="Permalink to this headline">¶</a></h1>
+<p>Django management commands allow for project related tasks to be easily and
+repeatedly performed without having to write a request-responding view.
+Djangotailoring provides two such commands.</p>
+<div class="section" id="model-creation-assistance">
+<h2>Model Creation Assistance<a class="headerlink" href="#model-creation-assistance" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="makemtsmodels">
+<span id="makemtsmodels-command"></span><h3>makemtsmodels<a class="headerlink" href="#makemtsmodels" title="Permalink to this headline">¶</a></h3>
+<p>When called in a project configured for <tt class="docutils literal"><span class="pre">djangotailoring</span></tt>:</p>
+<div class="highlight-python"><pre>$ python manage.py makemtsmodels</pre>
+</div>
+<p>the project dictionary will be read, and used to build functional Python
+module code that contains <a class="reference internal" href="models.html#djangotailoring.models.SubjectData" title="djangotailoring.models.SubjectData"><tt class="xref py py-class docutils literal"><span class="pre">djangotailoring.models.SubjectData</span></tt></a> objects
+representing each source and its constituent characteristics. This code is
+written to standard-out.</p>
+<p>The best way to use this is to redirect the output to a file using the shell:</p>
+<div class="highlight-python"><pre>$ python manage.py makemtsmodels &gt; myapp/mtsmodels.py</pre>
+</div>
+<p>The resulting file should be <tt class="docutils literal"><span class="pre">import</span></tt>able and <tt class="docutils literal"><span class="pre">syncdb</span></tt>-able.</p>
+</div>
+</div>
+<div class="section" id="localization-assistance">
+<h2>Localization Assistance<a class="headerlink" href="#localization-assistance" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="makedictmessages">
+<span id="makedictmessages-command"></span><h3>makedictmessages<a class="headerlink" href="#makedictmessages" title="Permalink to this headline">¶</a></h3>
+<p>When called in a project configured for <tt class="docutils literal"><span class="pre">djangotailoring</span></tt>:</p>
+<div class="highlight-python"><pre>$ python manage.py makedictmessages &lt;langcode&gt;</pre>
+</div>
+<p>the project dictionary will be read, and used to build a set of GNU gettext
+packages for translating the current dictionary objects from the native
+language to another.</p>
+<p>This command performs the same as Django&#8217;s built-in <tt class="docutils literal"><span class="pre">makemessages</span></tt> command;
+the output file paths are the same, the document domain is the same, and the
+argument structure is the same.</p>
+<p>Various objects in the dictionary are written to the file, and categorized
+accordingly:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Survey questions (<em>mts|question</em>)</li>
+<li>Survey option text (<em>mts|option</em>)</li>
+<li>Substitution values (<em>mts|substitution</em>)</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Management Commands</a><ul>
+<li><a class="reference internal" href="#model-creation-assistance">Model Creation Assistance</a><ul>
+<li><a class="reference internal" href="#makemtsmodels">makemtsmodels</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#localization-assistance">Localization Assistance</a><ul>
+<li><a class="reference internal" href="#makedictmessages">makedictmessages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="util.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">djangotailoring.util</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../djangotailoring.accounts/index.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring.accounts</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/apps/djangotailoring/managementcommands.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../djangotailoring.accounts/index.html" title="djangotailoring.accounts"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="util.html" title="djangotailoring.util"
+             >previous</a> |</li>
+        <li><a href="../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="index.html" ><tt class="docutils literal docutils literal"><span class="pre">djangotailoring</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Dennis O’Reilly.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

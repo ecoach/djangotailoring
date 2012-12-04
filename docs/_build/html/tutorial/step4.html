@@ -1,0 +1,312 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Step 4: Attaching the Views to URLs &mdash; djangotailoring v0.5 documentation</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="djangotailoring v0.5 documentation" href="../index.html" />
+    <link rel="up" title="A djangotailoring Walkthrough" href="index.html" />
+    <link rel="next" title="Step 5: Adding Users" href="step5.html" />
+    <link rel="prev" title="Step 3: Building Up Views" href="step3.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="step5.html" title="Step 5: Adding Users"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="step3.html" title="Step 3: Building Up Views"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">A <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Walkthrough</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="step-4-attaching-the-views-to-urls">
+<h1>Step 4: Attaching the Views to URLs<a class="headerlink" href="#step-4-attaching-the-views-to-urls" title="Permalink to this headline">¶</a></h1>
+<p>Now that you hvae the views in place, it’s time to hook them up to URLs. In
+some cases, you didn&#8217;t have to write any view code to get the functionality.</p>
+<div class="section" id="urlconfs">
+<h2>URLconfs<a class="headerlink" href="#urlconfs" title="Permalink to this headline">¶</a></h2>
+<p>Since this is such a simple project, all of the URLs will be defined in the
+root <tt class="docutils literal"><span class="pre">urls.py</span></tt> file.</p>
+<div class="section" id="login">
+<h3>Login<a class="headerlink" href="#login" title="Permalink to this headline">¶</a></h3>
+<p>The login system leverages the built-in
+<a class="reference external" href="http://docs.djangoproject.com/en/1.3/topics/auth/">django.contrib.auth</a>
+framework, making life easy.</p>
+<ul>
+<li><p class="first">Modify <tt class="docutils literal"><span class="pre">urls.py</span></tt> to contain the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">djangotailoring.accounts.forms</span> <span class="kn">import</span> <span class="n">AccessCodeForm</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+  <span class="p">(</span><span class="s">r&#39;^login/$&#39;</span><span class="p">,</span> <span class="s">&#39;django.contrib.auth.views.login&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s">&#39;template_name&#39;</span><span class="p">:</span> <span class="s">&#39;login.html&#39;</span><span class="p">,</span>
+    <span class="s">&#39;authentication_form&#39;</span><span class="p">:</span> <span class="n">AccessCodeForm</span>
+  <span class="p">},</span> <span class="s">&#39;login&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>The first option is fairly obvious. The second option, <tt class="docutils literal"><span class="pre">authentication_form</span></tt>
+directs the view to use an <tt class="docutils literal"><span class="pre">AccessCodeForm</span></tt> instance instead of auth’s
+built-in Username/Password-style form. <tt class="docutils literal"><span class="pre">AccessCodeForm</span></tt> has a single field
+that users can use to authenticate.</p>
+</div>
+<div class="section" id="logout">
+<h3>Logout<a class="headerlink" href="#logout" title="Permalink to this headline">¶</a></h3>
+<p>For this site, logout leverages the same system as login, and is even simpler.
+The django-provided <tt class="docutils literal"><span class="pre">logout_then_login</span></tt> view does essentially what it says:
+if a logged-in user accesses this url, the user will be logged out, and
+redirected to your login page.</p>
+<ul>
+<li><p class="first">Below the login pattern in <tt class="docutils literal"><span class="pre">urls.py</span></tt> add the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+  <span class="c"># ...,</span>
+  <span class="p">(</span><span class="s">r&#39;^logout/$&#39;</span><span class="p">,</span> <span class="s">&#39;django.contrib.auth.views.logout_then_login&#39;</span><span class="p">,</span> <span class="p">{},</span> <span class="s">&#39;logout&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="home">
+<h3>Home<a class="headerlink" href="#home" title="Permalink to this headline">¶</a></h3>
+<p>To simplify things, any user requesting the root URL of the project should be
+forwarded to the login page. To do that, you can leverage the built-in Django
+<tt class="docutils literal"><span class="pre">RedirectView</span></tt>.</p>
+<ol class="arabic">
+<li><p class="first">Import the <tt class="docutils literal"><span class="pre">RedirectView</span></tt> in <tt class="docutils literal"><span class="pre">urls.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">RedirectView</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create the URL pattern for the view:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+  <span class="p">(</span><span class="s">r&#39;^$&#39;</span><span class="p">,</span> <span class="n">RedirectView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&#39;/login/&#39;</span><span class="p">),</span> <span class="s">&#39;home&#39;</span><span class="p">),</span>
+  <span class="c"># ...,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="the-survey">
+<h3>The Survey<a class="headerlink" href="#the-survey" title="Permalink to this headline">¶</a></h3>
+<p>To include the survey in your project, you’ll need to import the view class
+that you created in <tt class="docutils literal"><span class="pre">views.py</span></tt>, and then attach it to a URL. The trick about
+the survey is that there is a required URL parameter,  <tt class="docutils literal"><span class="pre">page_id</span></tt>, that needs
+to be present for some magic to occur. You’ll see that below.</p>
+<ol class="arabic">
+<li><p class="first">Import your SurveyView class in <tt class="docutils literal"><span class="pre">urls.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">main.views</span> <span class="kn">import</span> <span class="n">SleepSurveyView</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create a URL pattern with the <tt class="docutils literal"><span class="pre">page_id</span></tt> parameter connected to your
+view:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+  <span class="c"># ...,</span>
+  <span class="p">(</span><span class="s">r&#39;^survey/(?P&lt;page_id&gt;.*)/$&#39;</span><span class="p">,</span> <span class="n">SleepSurveyView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="p">{},</span> <span class="s">&#39;survey&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="that-message-document">
+<h3>That Message Document<a class="headerlink" href="#that-message-document" title="Permalink to this headline">¶</a></h3>
+<p>To use the built-in <tt class="docutils literal"><span class="pre">TailoredDocView</span></tt> class without writing the view code
+you can attach it directly within the URLconf itself.</p>
+<ol class="arabic">
+<li><p class="first">Import <tt class="docutils literal"><span class="pre">TailoredDocView</span></tt> in <tt class="docutils literal"><span class="pre">urls.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">djangotailoring.views</span> <span class="kn">import</span> <span class="n">TailoredDocView</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create a URL pattern attached to a customized view:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+  <span class="c"># ...,</span>
+  <span class="p">(</span><span class="s">r&#39;^intro/$&#39;</span><span class="p">,</span>
+    <span class="n">TailoredDocView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(</span>
+      <span class="n">template_name</span><span class="o">=</span><span class="s">&#39;sleepintro.html&#39;</span><span class="p">,</span>
+      <span class="n">message_document</span><span class="o">=</span><span class="s">&#39;Messages/SleepIntro.messages&#39;</span><span class="p">),</span>
+    <span class="p">{},</span> <span class="s">&#39;intro&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div>Once again, the <tt class="docutils literal"><span class="pre">template_name</span></tt> option is straight-forward. The only other
+required option for a TailoredDocView is <tt class="docutils literal"><span class="pre">message_document</span></tt>, which, come
+to think of it, is fairly obvious as well.</div></blockquote>
+<p>With that in place, logged-in users visiting <tt class="docutils literal"><span class="pre">/intro/</span></tt> should see tailored
+content.</p>
+<p>Oh, right. That whole logged-in users part…</p>
+</div>
+<div class="section" id="protecting-the-views">
+<h3>Protecting the Views<a class="headerlink" href="#protecting-the-views" title="Permalink to this headline">¶</a></h3>
+<p>One last thing to do before you go is to force users to log in if they attempt
+to load the tailored document and survey. You can use Django’s built-in
+<tt class="docutils literal"><span class="pre">login_required</span></tt> wrapper function to protect these precious views.</p>
+<ol class="arabic">
+<li><p class="first">Import the <tt class="docutils literal"><span class="pre">login_required</span></tt> ‘decorator’:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">login_required</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Wrap the view functions with said function:</p>
+<div class="highlight-python"><pre>urlpatterns = patterns('',
+  # ...,
+  (r'^survey/(?P&lt;page_id&gt;.*)$', login_required(SleepSurveyView.as_view()),
+    {}, 'survey'),
+  (r'^intro/$',
+    login_required(TailoredDocView.as_view(
+    # ...
+)</pre>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="in-the-end">
+<h3>In the End<a class="headerlink" href="#in-the-end" title="Permalink to this headline">¶</a></h3>
+<p>After all of that work, <tt class="docutils literal"><span class="pre">urls.py</span></tt> should look something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.conf.urls.defaults</span> <span class="kn">import</span> <span class="n">patterns</span>
+<span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">RedirectView</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">login_required</span>
+<span class="kn">from</span> <span class="nn">djangotailoring.accounts.forms</span> <span class="kn">import</span> <span class="n">AccessCodeForm</span>
+<span class="kn">from</span> <span class="nn">djangotailoring.views</span> <span class="kn">import</span> <span class="n">TailoredDocView</span>
+
+<span class="kn">from</span> <span class="nn">main.views</span> <span class="kn">import</span> <span class="n">SleepSurveyView</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+  <span class="p">(</span><span class="s">r&#39;^$&#39;</span><span class="p">,</span> <span class="n">RedirectView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&#39;/login/&#39;</span><span class="p">),</span> <span class="p">{},</span> <span class="s">&#39;home&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s">r&#39;^login/$&#39;</span><span class="p">,</span> <span class="s">&#39;django.contrib.auth.views.login&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s">&#39;template_name&#39;</span><span class="p">:</span> <span class="s">&#39;login.html&#39;</span><span class="p">,</span>
+    <span class="s">&#39;authentication_form&#39;</span><span class="p">:</span> <span class="n">AccessCodeForm</span>
+  <span class="p">},</span> <span class="s">&#39;login&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s">r&#39;^logout/$&#39;</span><span class="p">,</span> <span class="s">&#39;django.contrib.auth.views.logout_then_login&#39;</span><span class="p">,</span> <span class="p">{},</span> <span class="s">&#39;logout&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s">r&#39;^survey/(?P&lt;page_id&gt;.*)/$&#39;</span><span class="p">,</span>
+    <span class="n">login_required</span><span class="p">(</span><span class="n">SleepSurveyView</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span>
+    <span class="p">{},</span> <span class="s">&#39;survey&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="s">r&#39;^intro/$&#39;</span><span class="p">,</span>
+    <span class="n">login_required</span><span class="p">(</span><span class="n">TailoredDocView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(</span>
+      <span class="n">template_name</span><span class="o">=</span><span class="s">&#39;sleepintro.html&#39;</span><span class="p">,</span>
+      <span class="n">message_document</span><span class="o">=</span><span class="s">&#39;Messages/SleepIntro.messages&#39;</span>
+    <span class="p">)),</span> <span class="p">{},</span> <span class="s">&#39;intro&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Now that our site is complete, it’s time to move on to <a class="reference internal" href="step5.html"><em>Step 5: Adding Users</em></a>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Step 4: Attaching the Views to URLs</a><ul>
+<li><a class="reference internal" href="#urlconfs">URLconfs</a><ul>
+<li><a class="reference internal" href="#login">Login</a></li>
+<li><a class="reference internal" href="#logout">Logout</a></li>
+<li><a class="reference internal" href="#home">Home</a></li>
+<li><a class="reference internal" href="#the-survey">The Survey</a></li>
+<li><a class="reference internal" href="#that-message-document">That Message Document</a></li>
+<li><a class="reference internal" href="#protecting-the-views">Protecting the Views</a></li>
+<li><a class="reference internal" href="#in-the-end">In the End</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="step3.html"
+                        title="previous chapter">Step 3: Building Up Views</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="step5.html"
+                        title="next chapter">Step 5: Adding Users</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/tutorial/step4.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="step5.html" title="Step 5: Adding Users"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="step3.html" title="Step 3: Building Up Views"
+             >previous</a> |</li>
+        <li><a href="../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="index.html" >A <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Walkthrough</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Dennis O’Reilly.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

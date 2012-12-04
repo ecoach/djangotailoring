@@ -1,0 +1,316 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>djangotailoring.accounts.accesscodes &mdash; djangotailoring v0.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="djangotailoring v0.5 documentation" href="../../index.html" />
+    <link rel="up" title="djangotailoring.accounts" href="index.html" />
+    <link rel="next" title="djangotailoring.accounts.models" href="models.html" />
+    <link rel="prev" title="djangotailoring.accounts" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="djangotailoring.accounts.models"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="djangotailoring.accounts"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The <tt class="docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U"><tt class="docutils literal docutils literal"><span class="pre">djangotailoring.accounts</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-djangotailoring.accounts.accesscodes">
+<span id="djangotailoring-accounts-accesscodes"></span><h1><tt class="docutils literal"><span class="pre">djangotailoring.accounts.accesscodes</span></tt><a class="headerlink" href="#module-djangotailoring.accounts.accesscodes" title="Permalink to this headline">¶</a></h1>
+<p>Access Codes are often structured in such a way that they are easily
+generated, and validated. The base class <a class="reference internal" href="#djangotailoring.accounts.accesscodes.Code" title="djangotailoring.accounts.accesscodes.Code"><tt class="xref py py-class docutils literal"><span class="pre">Code</span></tt></a> contains most of the
+functionality.</p>
+<p>Also part of the standard set of Code generators is the pair of Basic code
+classes. A Basic code consists of two letters followed by four digits. Regular
+versions of the Basic codes have their letters drawn from A-T, while the test
+versions have their letters drawn from the range W-Z. This way, codes can be
+distinguished at a glance.</p>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="djangotailoring.accounts.accesscodes.Code">
+<em class="property">class </em><tt class="descclassname">djangotailoring.accounts.accesscodes.</tt><tt class="descname">Code</tt><big>(</big><em>accesscode</em><big>)</big><a class="headerlink" href="#djangotailoring.accounts.accesscodes.Code" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>accesscode</strong> (<em>a string</em>) &#8211; an access code</td>
+</tr>
+</tbody>
+</table>
+<p>Represents a single access code object. Can be queried for validity and
+existence in the authentication system. Class methods exist for new code
+generation. Codes that are generated are random strings of 15 letters and
+numbers.</p>
+<dl class="method">
+<dt id="djangotailoring.accounts.accesscodes.Code.is_valid">
+<tt class="descname">is_valid</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.accounts.accesscodes.Code.is_valid" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a boolean</td>
+</tr>
+</tbody>
+</table>
+<p>Identifies whether the current Code is valid per the rules defined by the
+class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.accounts.accesscodes.Code.get_user">
+<tt class="descname">get_user</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.accounts.accesscodes.Code.get_user" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a <tt class="xref py py-mod docutils literal"><span class="pre">django.contrib.auth</span></tt> User</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">User model associated with this code. If no such user exists,
+raises <tt class="xref py py-exc docutils literal"><span class="pre">User.DoesNotExist</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.accounts.accesscodes.Code.create_user">
+<tt class="descname">create_user</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.accounts.accesscodes.Code.create_user" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a <tt class="xref py py-mod docutils literal"><span class="pre">django.contrib.auth</span></tt> User</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a new User for this new access code, set without a password or
+last_login time. <tt class="xref docutils literal"><span class="pre">None</span></tt> if the code already exists.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.accounts.accesscodes.Code.get_or_create_user">
+<tt class="descname">get_or_create_user</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.accounts.accesscodes.Code.get_or_create_user" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a tuple of (<tt class="xref py py-mod docutils literal"><span class="pre">django.contrib.auth</span></tt> User, boolean)</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a User for this code, along with a boolean indicating whether
+the user was created or not.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="djangotailoring.accounts.accesscodes.Code.generate_new_code">
+<em class="property">classmethod </em><tt class="descname">generate_new_code</tt><big>(</big><em>cls</em><big>)</big><a class="headerlink" href="#djangotailoring.accounts.accesscodes.Code.generate_new_code" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">an instance of <tt class="docutils literal"><span class="pre">cls</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>Subclasses should implement this class method to customize how access
+codes strings are built. This method should not attempt to check whether a
+code it generated was already used.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="djangotailoring.accounts.accesscodes.Code.code_generator">
+<em class="property">classmethod </em><tt class="descname">code_generator</tt><big>(</big><em>cls</em><big>)</big><a class="headerlink" href="#djangotailoring.accounts.accesscodes.Code.code_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>An iterator that will contiunously yield new codes per
+<a class="reference internal" href="#djangotailoring.accounts.accesscodes.Code.generate_new_code" title="djangotailoring.accounts.accesscodes.Code.generate_new_code"><tt class="xref py py-meth docutils literal"><span class="pre">generate_new_code()</span></tt></a></p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="djangotailoring.accounts.accesscodes.Code.codes_in_database">
+<em class="property">classmethod </em><tt class="descname">codes_in_database</tt><big>(</big><em>cls</em>, <em>codes</em><big>)</big><a class="headerlink" href="#djangotailoring.accounts.accesscodes.Code.codes_in_database" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>codes</strong> (<em>a collection of strings</em>) &#8211; a set of access codes</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a list of strings</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">all access codes in <tt class="docutils literal"><span class="pre">codes</span></tt> that are currently in use in the
+Users table.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="djangotailoring.accounts.accesscodes.Code.new_code">
+<em class="property">classmethod </em><tt class="descname">new_code</tt><big>(</big><em>cls</em><big>)</big><a class="headerlink" href="#djangotailoring.accounts.accesscodes.Code.new_code" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">an instance of <tt class="docutils literal"><span class="pre">cls</span></tt></td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">an instance that does not have an associated User in the
+database.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="djangotailoring.accounts.accesscodes.Code.new_codes">
+<em class="property">classmethod </em><tt class="descname">new_codes</tt><big>(</big><em>cls</em>, <em>size</em><big>)</big><a class="headerlink" href="#djangotailoring.accounts.accesscodes.Code.new_codes" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>a positive integer</em>) &#8211; the number of codes you wish to generate.</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">an iterable of <tt class="docutils literal"><span class="pre">cls</span></tt> instances</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a collection of instances of size <tt class="docutils literal"><span class="pre">size</span></tt>. Instances returned
+are guaranteed not to have Users in the database at the time of
+generation.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="basic-codes">
+<h3>Basic Codes<a class="headerlink" href="#basic-codes" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="djangotailoring.accounts.accesscodes.BasicAccessCode">
+<em class="property">class </em><tt class="descclassname">djangotailoring.accounts.accesscodes.</tt><tt class="descname">BasicAccessCode</tt><a class="headerlink" href="#djangotailoring.accounts.accesscodes.BasicAccessCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>A code class that generates codes in the format &#8220;LLDDDD&#8221;, where L is
+an uppercase ASCII letter from the set containing A-T, and D is a
+base-10 digit.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="djangotailoring.accounts.accesscodes.BasicTestCode">
+<em class="property">class </em><tt class="descclassname">djangotailoring.accounts.accesscodes.</tt><tt class="descname">BasicTestCode</tt><a class="headerlink" href="#djangotailoring.accounts.accesscodes.BasicTestCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>A BasicAccessCode whose letters will only be in the set of letters
+containing W-Z rather than A-T. This distinguishes them from regular
+BasicAccesCodes easily.</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">djangotailoring.accounts.accesscodes</span></tt></a><ul>
+<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#basic-codes">Basic Codes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">djangotailoring.accounts</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="models.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">djangotailoring.accounts.models</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/apps/djangotailoring.accounts/accesscodes.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="djangotailoring.accounts.models"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="djangotailoring.accounts"
+             >previous</a> |</li>
+        <li><a href="../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The <tt class="docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="index.html" ><tt class="docutils literal docutils literal"><span class="pre">djangotailoring.accounts</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Dennis O’Reilly.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

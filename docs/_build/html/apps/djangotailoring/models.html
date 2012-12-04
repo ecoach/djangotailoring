@@ -1,0 +1,217 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>djangotailoring.models &mdash; djangotailoring v0.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="djangotailoring v0.5 documentation" href="../../index.html" />
+    <link rel="up" title="djangotailoring" href="index.html" />
+    <link rel="next" title="djangotailoring.subjects" href="subjects.html" />
+    <link rel="prev" title="djangotailoring.project" href="project.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="subjects.html" title="djangotailoring.subjects"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="project.html" title="djangotailoring.project"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-djangotailoring.models">
+<span id="djangotailoring-models"></span><h1><tt class="docutils literal"><span class="pre">djangotailoring.models</span></tt><a class="headerlink" href="#module-djangotailoring.models" title="Permalink to this headline">¶</a></h1>
+<p>Djangotailoring provides a set of model classes that can be used for subject
+data storage, one of which is abstract.</p>
+<div class="section" id="models">
+<h2>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="djangotailoring.models.SubjectData">
+<em class="property">class </em><tt class="descclassname">djangotailoring.models.</tt><tt class="descname">SubjectData</tt><a class="headerlink" href="#djangotailoring.models.SubjectData" title="Permalink to this definition">¶</a></dt>
+<dd><p>An abstract model class that is useful for storing subject data as columns
+in a wide table. Subclasses can be used in concert with
+<a class="reference internal" href="subjects.html#djangotailoring.subjects.DjangoSubjectLoader" title="djangotailoring.subjects.DjangoSubjectLoader"><tt class="xref py py-class docutils literal"><span class="pre">djangotailoring.subjects.DjangoSubjectLoader</span></tt></a> to make fetching and
+updating subjects in such a fashion straightforward.</p>
+<dl class="attribute">
+<dt id="djangotailoring.models.SubjectData.user_id">
+<tt class="descname">user_id</tt><a class="headerlink" href="#djangotailoring.models.SubjectData.user_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A 40-character text field that is unique per table this is what&#8217;s used
+to identify the subject; it can be anything. It is conventionally the same
+as the user id of the auth.User objects, if used.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="djangotailoring.models.SubjectData.modified">
+<tt class="descname">modified</tt><a class="headerlink" href="#djangotailoring.models.SubjectData.modified" title="Permalink to this definition">¶</a></dt>
+<dd><p>A timestamp indicating the last time that the table was modified by any
+Django-level <cite>.save()</cite> command</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.models.SubjectData.as_json">
+<tt class="descname">as_json</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.models.SubjectData.as_json" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a string</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the JSON representation of <a class="reference internal" href="#djangotailoring.models.SubjectData.as_dict" title="djangotailoring.models.SubjectData.as_dict"><tt class="xref py py-meth docutils literal"><span class="pre">as_dict()</span></tt></a>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.models.SubjectData.as_dict">
+<tt class="descname">as_dict</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.models.SubjectData.as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a dictionary</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a dictionary of instance attribute names to their values.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="djangotailoring.models.SerializedSubjectData">
+<em class="property">class </em><tt class="descclassname">djangotailoring.models.</tt><tt class="descname">SerializedSubjectData</tt><a class="headerlink" href="#djangotailoring.models.SerializedSubjectData" title="Permalink to this definition">¶</a></dt>
+<dd><p>A concrete model class that is used for subject storage. All data is stored
+as a text blob, and it is up to clients to encode and decode the
+primary_data for each instance. It is used by
+<a class="reference internal" href="subjects.html#djangotailoring.subjects.SerializedSubjectLoader" title="djangotailoring.subjects.SerializedSubjectLoader"><tt class="xref py py-class docutils literal"><span class="pre">djangotailoring.subjects.SerializedSubjectLoader</span></tt></a> as its storage
+mechanism.</p>
+<dl class="attribute">
+<dt id="djangotailoring.models.SerializedSubjectData.user_id">
+<tt class="descname">user_id</tt><a class="headerlink" href="#djangotailoring.models.SerializedSubjectData.user_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A 40-character text field that is unique per table this is what&#8217;s used
+to identify the subject; it can be anything. It is conventionally the same
+as the user id of the auth.User objects, if used.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="djangotailoring.models.SerializedSubjectData.primary_data">
+<tt class="descname">primary_data</tt><a class="headerlink" href="#djangotailoring.models.SerializedSubjectData.primary_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>A sizeless text blob used to store subject data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="djangotailoring.models.SerializedSubjectData.updated">
+<tt class="descname">updated</tt><a class="headerlink" href="#djangotailoring.models.SerializedSubjectData.updated" title="Permalink to this definition">¶</a></dt>
+<dd><p>A timestamp indicating the last time that the primary_data was changed by
+any Django-level <cite>.save()</cite> command</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">djangotailoring.models</span></tt></a><ul>
+<li><a class="reference internal" href="#models">Models</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="project.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">djangotailoring.project</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="subjects.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">djangotailoring.subjects</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/apps/djangotailoring/models.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="subjects.html" title="djangotailoring.subjects"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="project.html" title="djangotailoring.project"
+             >previous</a> |</li>
+        <li><a href="../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="index.html" ><tt class="docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Dennis O’Reilly.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

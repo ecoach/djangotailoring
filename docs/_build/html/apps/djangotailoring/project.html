@@ -1,0 +1,216 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>djangotailoring.project &mdash; djangotailoring v0.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="djangotailoring v0.5 documentation" href="../../index.html" />
+    <link rel="up" title="djangotailoring" href="index.html" />
+    <link rel="next" title="djangotailoring.models" href="models.html" />
+    <link rel="prev" title="djangotailoring" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="djangotailoring.models"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="djangotailoring"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-djangotailoring.project">
+<span id="djangotailoring-project"></span><h1><tt class="docutils literal"><span class="pre">djangotailoring.project</span></tt><a class="headerlink" href="#module-djangotailoring.project" title="Permalink to this headline">¶</a></h1>
+<p>The core module of <tt class="docutils literal"><span class="pre">djangotailoring</span></tt> is <tt class="docutils literal"><span class="pre">project</span></tt>. There are several
+functions available that are used to load or locate resources defined for the
+whole of the <tt class="docutils literal"><span class="pre">djangotailoring</span></tt> application.</p>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="djangotailoring.project.getproject">
+<tt class="descclassname">djangotailoring.project.</tt><tt class="descname">getproject</tt><big>(</big><big>)</big><a class="headerlink" href="#djangotailoring.project.getproject" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">tailoring2.BaseProject instance</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the current application’s tailoring2 Project instance.</td>
+</tr>
+</tbody>
+</table>
+<p>This is based on the <a class="reference internal" href="../../settings.html"><em>global djangotailoring settings</em></a>.
+The project object is lazily loaded.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="djangotailoring.project.getprojectroot">
+<tt class="descclassname">djangotailoring.project.</tt><tt class="descname">getprojectroot</tt><big>(</big><big>)</big><a class="headerlink" href="#djangotailoring.project.getprojectroot" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a string</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the absolute path to the current project&#8217;s root folder.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="djangotailoring.project.getsubjectloader">
+<tt class="descclassname">djangotailoring.project.</tt><tt class="descname">getsubjectloader</tt><big>(</big><big>)</big><a class="headerlink" href="#djangotailoring.project.getsubjectloader" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="subjects.html#djangotailoring.subjects.SubjectLoader" title="djangotailoring.subjects.SubjectLoader"><tt class="xref py py-class docutils literal"><span class="pre">djangotailoring.subjects.SubjectLoader</span></tt></a> object</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the current subject loader class as defined by
+<a class="reference internal" href="../../settings.html#settings.TAILORING2_SUBJECT_LOADER_CLASS" title="settings.TAILORING2_SUBJECT_LOADER_CLASS"><tt class="xref py py-data docutils literal"><span class="pre">settings.TAILORING2_SUBJECT_LOADER_CLASS</span></tt></a>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="djangotailoring.project.project_document_path">
+<tt class="descclassname">djangotailoring.project.</tt><tt class="descname">project_document_path</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#djangotailoring.project.project_document_path" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>a string</em>) &#8211; a project-relative file path</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a string</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the absolute path to the document <tt class="docutils literal"><span class="pre">path</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="djangotailoring.project.project_tailoring_doc">
+<tt class="descclassname">djangotailoring.project.</tt><tt class="descname">project_tailoring_doc</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#djangotailoring.project.project_tailoring_doc" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>a string</em>) &#8211; a project-relative file path</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a tailoring2 Document instance</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the tailoring2 Document (an ElementTree) for the document at
+<tt class="docutils literal"><span class="pre">path</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">djangotailoring.project</span></tt></a><ul>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="models.html"
+                        title="next chapter"><tt class="docutils literal docutils literal"><span class="pre">djangotailoring.models</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/apps/djangotailoring/project.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="djangotailoring.models"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="djangotailoring"
+             >previous</a> |</li>
+        <li><a href="../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="index.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Dennis O’Reilly.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

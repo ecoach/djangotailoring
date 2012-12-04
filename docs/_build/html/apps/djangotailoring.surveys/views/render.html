@@ -1,0 +1,206 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>djangotailoring.surveys.views.render &mdash; djangotailoring v0.5 documentation</title>
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="djangotailoring v0.5 documentation" href="../../../index.html" />
+    <link rel="up" title="djangotailoring.surveys.views" href="index.html" />
+    <link rel="next" title="djangotailoring.surveys.models" href="../models.html" />
+    <link rel="prev" title="djangotailoring.surveys.views.base" href="base.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../models.html" title="djangotailoring.surveys.models"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="base.html" title="djangotailoring.surveys.views.base"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="../index.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring.surveys</span></tt></a> &raquo;</li>
+          <li><a href="index.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring.surveys.views</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-djangotailoring.surveys.views.render">
+<span id="djangotailoring-surveys-views-render"></span><h1><tt class="docutils literal"><span class="pre">djangotailoring.surveys.views.render</span></tt><a class="headerlink" href="#module-djangotailoring.surveys.views.render" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt>
+<tt class="descname">SurveyRenderChunk(tree, subject, treq, page_data, show_errors, request_errors=None):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tree</strong> (an <tt class="xref py py-class docutils literal"><span class="pre">ElementTree</span></tt> instance) &#8211; The MTS Messages tree for the current survey page</li>
+<li><strong>subject</strong> (a <tt class="xref py py-class docutils literal"><span class="pre">tailoring.subjects.Subject</span></tt> instance) &#8211; the current subject <em>with</em> current survey data</li>
+<li><strong>treq</strong> (a <a class="reference internal" href="../../djangotailoring/tailoringrequest.html#djangotailoring.tailoringrequest.TailoringRequest" title="djangotailoring.tailoringrequest.TailoringRequest"><tt class="xref py py-class docutils literal"><span class="pre">TailoringRequest</span></tt></a> instance) &#8211; the TailoringRequest for the current page</li>
+<li><strong>page_data</strong> (<em>a dictionary</em>) &#8211; the map of characteristic names to values for the current
+page.</li>
+<li><strong>show_errors</strong> (<em>a boolean</em>) &#8211; dictates whether <tt class="docutils literal"><span class="pre">validate</span></tt> commands in the tree will
+be shown or not.</li>
+<li><strong>request_errors</strong> (a list of <tt class="xref py py-class docutils literal"><span class="pre">surveytracking.projectutils.InvalidDataError</span></tt>s) &#8211; the list of type errors that will be re-inserted into
+the rendered output.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Encapsulates all of the relevant information to send to the tailoring engine
+for rendering a single page of a survey.</p>
+<p>Clients will primarily be familiar with this as the context item that the
+<a class="reference internal" href="../templatetags.html#render-survey-segment"><em>render_survey_segment</em></a> tag uses to output a page of survey form
+elements.</p>
+<dl class="method">
+<dt id="djangotailoring.surveys.views.render.has_content">
+<tt class="descclassname">djangotailoring.surveys.views.render.</tt><tt class="descname">has_content</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.render.has_content" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a boolean</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">whether the current tailored output has any renderable content.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.render.has_errors">
+<tt class="descclassname">djangotailoring.surveys.views.render.</tt><tt class="descname">has_errors</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.render.has_errors" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">a boolean</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">whether the set of objects will result in any errors.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangotailoring.surveys.views.render.render">
+<tt class="descclassname">djangotailoring.surveys.views.render.</tt><tt class="descname">render</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#djangotailoring.surveys.views.render.render" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">an <tt class="xref py py-class docutils literal"><span class="pre">ElementTree</span></tt> instance</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">a rendered ElementTree of the final HTML-ified survey output.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">djangotailoring.surveys.views.render</span></tt></a><ul>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="base.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">djangotailoring.surveys.views.base</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../models.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">djangotailoring.surveys.models</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/apps/djangotailoring.surveys/views/render.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../models.html" title="djangotailoring.surveys.models"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="base.html" title="djangotailoring.surveys.views.base"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">djangotailoring v0.5 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >The <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring</span></tt> Applications</a> &raquo;</li>
+          <li><a href="../index.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring.surveys</span></tt></a> &raquo;</li>
+          <li><a href="index.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangotailoring.surveys.views</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Dennis O’Reilly.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
