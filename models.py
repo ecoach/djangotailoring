@@ -1,12 +1,12 @@
 from tailoring2.common import json
-
+from django.contrib.auth.models import User
 from django.db import models
 
 from djangotailoring import getproject
 
 class SubjectData(models.Model):
-    user_id = models.CharField(max_length=40, db_column="user_id",
-        verbose_name="Unique user id")
+    #user_id = models.CharField(max_length=40, db_column="user_id", verbose_name="Unique user id")
+    user_id = models.ForeignKey(User, db_column="user_id", to_field='username', blank=True, null=True, on_delete=models.SET_NULL, verbose_name="Unique user id")  
     updated = models.DateTimeField(auto_now=True)
     
     class Meta:
