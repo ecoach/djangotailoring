@@ -75,7 +75,9 @@ def model_dict_for_dictionary(mtsdict):
         fields = []
         for characteristic in mtsdict.characteristics:
             if sourcename in characteristic.sources:
-                if characteristic.is_multivalued:
+                if characteristic.is_derived:
+                    pass
+                elif characteristic.is_multivalued:
                     fieldnames = db_names_for_chardef(characteristic)
                     fields.extend([_definition_for_name(fieldname, 'bool')
                                    for fieldname in fieldnames])
