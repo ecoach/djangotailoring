@@ -69,7 +69,7 @@ def restrictions_dict_for_dictionary(mtsdict):
 
 def model_dict_for_dictionary(mtsdict):
     model_dict = {}
-    classnamer = lambda n: '%sData' % (n if n != '' else 'EmptySource')
+    classnamer = lambda n: '%s' % (n if n != '' else 'EmptySource')
     for source in mtsdict.sources:
         sourcename = source.name
         fields = []
