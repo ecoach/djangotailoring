@@ -85,6 +85,7 @@ def model_dict_for_dictionary(mtsdict):
                     restrictionset = characteristic.restrictionset
                     type = _pytype_to_type[characteristic.basetype.pytype]
                     maxlength = 0
+                    minlength = 20
                     choicesname = ''
                     if restrictionset:
                         choicesname = _choices_name_for_restrictionset(
@@ -97,7 +98,9 @@ def model_dict_for_dictionary(mtsdict):
                                 type = 'strc'
                             for value in restrictionset.values:
                                 maxlength = max(maxlength, len(value.symbol))
-                    if maxlength < 1 and type == 'str':
+                    if maxlength == 0:
+                        maxlength = minlength
+                    if maxlength > 100 and type == 'str':
                         type = 'text'
                     args = dict(maxlength=maxlength,
                         choices=choicesname)
