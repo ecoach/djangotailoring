@@ -220,6 +220,7 @@ class DjangoSubjectLoader(SubjectLoader):
         logger.debug('Database data: %s', all_data)
         filter_multi_val_characteristics(all_data)
         logger.debug('Final user subject data: %s', all_data)
+        # probably overide here to append subject characteristics
         return all_data
     
     @classmethod

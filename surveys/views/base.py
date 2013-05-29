@@ -324,7 +324,16 @@ class BaseSurveyView(TemplateView):
     
     def get_latest_state(self):
         return self._get_state_for_page()
-    
+
+    def apply_testcase_data(self, state, page):
+        subject = self.get_subject()
+        source_data = subject.selection_chars.get(self.manager.source, {})
+        latest_page_data = {}
+        for char in page.characteristics:
+            if char in source_data:
+                latest_page_data[char] = source_data[char]
+        state.latest_page_data = latest_page_data
+     
     def create_next_state(self, next_page):
         try:
             state = self._get_state_for_page(next_page)
@@ -336,15 +345,17 @@ class BaseSurveyView(TemplateView):
         state.previous_state = self.state
         self.state.invalidate_descendents()
         state.valid = True
+        self.apply_testcase_data(state, next_page)
         state.save()
         return state
-    
+     
     def create_initial_state(self):
         state = SurveyState(user_id=self.get_user_id(),
             survey_id=self.get_survey_id())
-        first_page_id = self.manager.first_unique_msgid_for_page(
-            self.manager.pages[0])
+        page = self.manager.pages[0]
+        first_page_id = self.manager.first_unique_msgid_for_page(page)
         state.page_msgid = first_page_id
+        self.apply_testcase_data(state, page)
         state.save()
         return state
     
@@ -371,14 +382,12 @@ class BaseSurveyView(TemplateView):
     
     def save_state(self, state):
         state.save()
-    
+   
     def state_for_restart(self):
-        try:
-            return self.get_latest_state()
-        except SurveyState.DoesNotExist:
-            return self.create_initial_state()
-    
-
+        return self.create_initial_state()
+        #try:
+        #    return self.get_latest_state()
+        #except SurveyState.DoesNotExist:
 
 class AutoSaveSubjectDataMixin(object):
     """Calls save_subject when a user submits a valid request on a survey
