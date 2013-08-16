@@ -417,7 +417,8 @@ class NoManagerMixin(object):
         return manager_from_path(
             project_document_path(survey_document), project=getproject(),
             source=source)
-    
+   
+    # jared override this 
     def get_survey_document(self):
         return self.survey_document
     

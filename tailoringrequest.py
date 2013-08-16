@@ -14,7 +14,7 @@ class MissingSectionError(TailoringRequestError): pass
 
 class MissingDocumentError(TailoringRequestError): pass
 
-
+# jared (use this for inbox - ignore render_transforms)
 class TailoringRequest(object):
     
     def __init__(self, project, docpath=None, subject=None, source='',
@@ -67,7 +67,8 @@ class TailoringRequest(object):
             raise MissingSectionError(errormsg)
         return self.project.getpipeline(section, self.subject, self,
             self.render_transforms)
-    
+   
+    # jared call this to get element tree 
     def render_section(self, section):
         logger.info('Rendering section "%s".', section)
         return self.pipeline_for_section(section).run()
