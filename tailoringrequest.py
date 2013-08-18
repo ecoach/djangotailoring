@@ -65,8 +65,7 @@ class TailoringRequest(object):
                 self.docpath)
             logger.error(errormsg)
             raise MissingSectionError(errormsg)
-        return self.project.getpipeline(section, self.subject, self,
-            self.render_transforms)
+        return self.project.getpipeline(section, self.subject, self, self.render_transforms)
    
     # jared call this to get element tree 
     def render_section(self, section):
